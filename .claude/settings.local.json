@@ -7,7 +7,9 @@
       "Bash(node:*)",
       "Bash(python:*)",
       "Bash(where:*)",
-      "Bash(py:*)"
+      "Bash(py:*)",
+      "Bash(sed:*)",
+      "Bash(/tmp/parse_nb.py:*)"
     ]
   }
 }

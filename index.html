@@ -86,6 +86,16 @@
   table{border-collapse:collapse;width:100%;margin:8px 0;}
   td,th{padding:5px 10px;border:1px solid #444;font-size:.88rem;}
 
+  /* ── HW2 DOSIRRAH QUIZ ── */
+  #hw2Dosirrah{display:none;flex-direction:column;align-items:center;min-height:100vh;padding:24px 16px 60px;}
+  #hw2dDone{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:40px 20px;text-align:center;}
+  .hw2d-header{width:100%;max-width:780px;display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .hw2d-title{flex:1;font-weight:800;font-size:.97rem;}
+  .hw2d-badge{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:30px;padding:3px 12px;font-size:.72rem;font-weight:700;white-space:nowrap;}
+  .hw2d-section-tag{display:inline-block;background:rgba(245,158,11,.18);color:#fbbf24;border-radius:20px;padding:3px 12px;font-size:.72rem;font-weight:700;margin-bottom:12px;}
+  .hw2d-canvas-wrap{width:100%;max-width:780px;margin-bottom:14px;}
+  .hw2d-canvas{width:100%;border-radius:10px;border:1px solid var(--border);display:block;}
+
   /* ── CLASS SELECTOR ── */
   #classSelect{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;}
   #classSelect h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#5b6ef5,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:10px;}
@@ -131,6 +141,79 @@
   .nb-table tr:nth-child(even) td{background:rgba(255,255,255,.02);}
   .btn-notebook{margin-top:14px;background:rgba(91,110,245,.18);color:#8b9cf8;border:1px solid rgba(91,110,245,.4);border-radius:30px;padding:12px 36px;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .15s,color .15s;}
   .btn-notebook:hover{background:rgba(91,110,245,.3);color:#c7d2fe;}
+
+  /* ── HOME MENU ── */
+  .home-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;width:100%;max-width:680px;margin-top:10px;}
+  .menu-card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:30px 24px;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .menu-card:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(91,110,245,.28);border-color:var(--accent);}
+  .menu-card .mc-icon{font-size:2.2rem;}
+  .menu-card h3{font-size:1.05rem;font-weight:800;margin:0;}
+  .menu-card p{font-size:.78rem;color:var(--muted);line-height:1.5;margin:0;}
+  .home-back-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:30px;padding:7px 18px;cursor:pointer;font-size:.83rem;margin-bottom:18px;transition:color .15s,border-color .15s;}
+  .home-back-btn:hover{color:var(--text);border-color:var(--accent);}
+  .switch-cls-btn{margin-top:24px;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;border-radius:30px;padding:10px 22px;font-size:.85rem;}
+  .switch-cls-btn:hover{color:var(--text);}
+
+  /* ── NOTEBOOK TOPICS TOGGLE (mobile only) ── */
+  .nb-toggle-btn{display:none;}
+
+  /* ── MOBILE ≤ 640px ───────────────────────────────────────────────── */
+  @media(max-width:640px){
+    /* Class Selector */
+    #classSelect{padding:32px 16px;}
+    #classSelect h1{font-size:1.85rem;}
+    #classSelect .cs-sub{margin-bottom:28px;font-size:.88rem;}
+    .class-cards{flex-direction:column;align-items:center;gap:14px;width:100%;}
+    .class-card{width:100%;max-width:420px;min-width:0;padding:22px 24px;}
+
+    /* Home */
+    #home{padding:28px 14px 40px;}
+    #home h1{font-size:1.75rem;}
+    #home .sub{margin-bottom:20px;font-size:.85rem;}
+
+    /* Home menu: 1 col, horizontal cards */
+    .home-menu{grid-template-columns:1fr;gap:12px;}
+    .menu-card{flex-direction:row;text-align:left;justify-content:flex-start;padding:18px 20px;gap:16px;border-radius:16px;}
+    .menu-card .mc-icon{font-size:1.8rem;flex-shrink:0;}
+    .menu-card h3{font-size:.97rem;}
+    .menu-card p{font-size:.75rem;}
+
+    /* Quiz */
+    #quiz{padding:14px 10px 60px;}
+    .qhdr{gap:6px;}
+    .qtitle{font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .sbadge{font-size:.72rem;padding:4px 9px;white-space:nowrap;}
+    .card{padding:18px 14px;}
+    .question{font-size:.95rem;}
+    .opt{padding:11px 12px;font-size:.88rem;}
+    .btn{padding:11px 20px;font-size:.85rem;}
+    .nav-row{gap:8px;}
+
+    /* Done */
+    #done{padding:32px 16px;}
+    #done h2{font-size:1.55rem;}
+    .sring{width:110px;height:110px;font-size:1.7rem;}
+
+    /* Notebook: collapsible sidebar */
+    .nb-toggle-btn{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 18px;color:var(--accent);
+      font-size:.85rem;font-weight:600;cursor:pointer;
+      background:rgba(91,110,245,.08);border:none;
+      border-bottom:1px solid var(--border);width:100%;text-align:left;
+    }
+    .nb-wrap{flex-direction:column;}
+    .nb-sidebar{
+      width:100%;height:auto;min-width:0;position:relative;
+      border-right:none;border-bottom:1px solid var(--border);
+      overflow:hidden;max-height:96px;
+      transition:max-height .28s ease;
+    }
+    .nb-sidebar.nb-open{max-height:60vh;overflow-y:auto;}
+    .nb-sidebar-hdr{display:none;}
+    .nb-content{padding:20px 14px 60px;}
+    .nb-section>h2{font-size:1.3rem;}
+  }
 </style>
 </head>
 <body>
@@ -155,12 +238,16 @@
 
 <!-- HOME -->
 <div id="home">
-  <h1 id="homeTitle">CSCI 443 Quiz</h1>
+  <h1 id="homeTitle">CSCI 443</h1>
   <p class="sub" id="homeSub">Advanced Data Science · Midterm Prep · Every Homework Question</p>
-  <div class="cat-grid" id="catGrid"></div>
-  <button class="btn-all" id="btnAll" onclick="startQuiz('all')">Study All Questions 🚀</button>
-  <button class="btn-notebook" id="btnNotebook" onclick="showNotebookCurrent()">📖 Study Notebook</button>
-  <button class="btn-nav" style="margin-top:14px;border-radius:30px;padding:10px 22px;font-size:.85rem;background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;" onclick="showClassSelect()">⇄ Switch Class</button>
+  <!-- 4-card main menu (populated by buildHome) -->
+  <div id="homeMenu" class="home-menu"></div>
+  <!-- Quiz categories sub-view -->
+  <div id="quizCategories" style="display:none;width:100%;max-width:980px;">
+    <button class="home-back-btn" onclick="showHomeMenu()">← Back</button>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+  <button class="switch-cls-btn" onclick="showClassSelect()">⇄ Switch Class</button>
 </div>
 
 <!-- QUIZ -->
@@ -214,6 +301,7 @@
     <!-- Sidebar -->
     <nav class="nb-sidebar">
       <button class="nb-back-btn" onclick="goHomeFromNotebook()">← Back to Quiz</button>
+      <button class="nb-toggle-btn" onclick="toggleNbSidebar('notebook')">☰ Topics</button>
       <div class="nb-sidebar-hdr">Study Topics</div>
       <button class="nb-item" data-nb="types"      onclick="nbShow('types')">Types of Data</button>
       <button class="nb-item" data-nb="rexp"       onclick="nbShow('rexp')">Random Experiments</button>
@@ -941,6 +1029,7 @@ df = spark.read.csv("/path/file.csv", header=True, inferSchema=True)</pre>
   <div class="nb-wrap">
     <nav class="nb-sidebar">
       <button class="nb-back-btn" onclick="goHomeFromNotebook112()">← Back to Quiz</button>
+      <button class="nb-toggle-btn" onclick="toggleNbSidebar('notebook112')">☰ Topics</button>
       <div class="nb-sidebar-hdr">CSCI 112 Topics</div>
       <button class="nb-item" data-nb112="java-classes"   onclick="nbShow112('java-classes')">Object Classes</button>
       <button class="nb-item" data-nb112="java-this"      onclick="nbShow112('java-this')">this &amp; Shadowing</button>
@@ -2715,10 +2804,12 @@ function buildHome(){
   const is112=currentClass==="112";
   const cats=is112?categories112:categories;
   const qs=is112?questions112:questions;
-  document.getElementById("homeTitle").textContent=is112?"CSCI 112 Quiz":"CSCI 443 Quiz";
+  document.getElementById("homeTitle").textContent=is112?"CSCI 112":"CSCI 443";
   document.getElementById("homeSub").textContent=is112
     ?"Intro to Java · Exam 1 Prep · Objects, Arrays, ArrayLists & More"
     :"Advanced Data Science · Midterm Prep · Every Homework Question";
+
+  // Build category grid (shown when Quizzes card is clicked)
   const g=document.getElementById("catGrid"); g.innerHTML="";
   cats.filter(c=>c.id!=="all").forEach(cat=>{
     const count=qs.filter(cat.f).length;
@@ -2727,18 +2818,41 @@ function buildHome(){
     d.onclick=()=>startQuiz(cat.id);
     g.appendChild(d);
   });
-  // Remove any previously injected quiz2 button before potentially re-adding
-  const existingQ2Btn=document.getElementById("btn-quiz2");
-  if(existingQ2Btn) existingQ2Btn.remove();
-  if(is112){
-    const q2btn=document.createElement("button");
-    q2btn.id="btn-quiz2";
-    q2btn.className="btn-all";
-    q2btn.style.cssText="background:linear-gradient(135deg,#22c55e,#15803d);margin-top:14px;";
-    q2btn.textContent="🎮 Interactive Quiz 2";
-    q2btn.onclick=()=>showQuiz2();
-    document.getElementById("home").appendChild(q2btn);
-  }
+
+  // Build 4-card main menu
+  const menu=document.getElementById("homeMenu"); menu.innerHTML="";
+  const menuItems=is112
+    ?[
+      {icon:"📚",title:"Quizzes",          desc:"Practice by topic",           action:()=>showQuizCategories()},
+      {icon:"🚀",title:"Study All Questions",desc:`All ${qs.length} questions`, action:()=>startQuiz("all")},
+      {icon:"📖",title:"Study Notebook",    desc:"Review key concepts",         action:()=>showNotebook112()},
+      {icon:"🎮",title:"Interactive Quiz 2",desc:"Game-style practice",         action:()=>showQuiz2()},
+    ]
+    :[
+      {icon:"📚",title:"Quizzes",          desc:"Practice by topic",           action:()=>showQuizCategories()},
+      {icon:"🚀",title:"Study All Questions",desc:`All ${qs.length} questions`, action:()=>startQuiz("all")},
+      {icon:"📖",title:"Study Notebook",    desc:"Review key concepts",         action:()=>showNotebook()},
+      {icon:"🔬",title:"Visuals Lab",       desc:"Interactive statistics",      action:()=>window.open("DS_Interactive/index.html","_blank")},
+      {icon:"🎓",title:"Quiz HW2 (dosirrah edition)",desc:"HW2 deep dive · 46 Qs · plots",action:()=>showHw2Dosirrah()},
+    ];
+  menuItems.forEach(item=>{
+    const c=document.createElement("div"); c.className="menu-card";
+    c.innerHTML=`<div class="mc-icon">${item.icon}</div><h3>${item.title}</h3><p>${item.desc}</p>`;
+    c.onclick=item.action;
+    menu.appendChild(c);
+  });
+
+  showHomeMenu();
+}
+
+function showQuizCategories(){
+  document.getElementById("homeMenu").style.display="none";
+  document.getElementById("quizCategories").style.display="block";
+}
+
+function showHomeMenu(){
+  document.getElementById("quizCategories").style.display="none";
+  document.getElementById("homeMenu").style.display="grid";
 }
 
 function startQuiz(catId){
@@ -2841,7 +2955,7 @@ function showDone(){
     `You answered ${knew} of ${total} correctly on first try. ${pct>=80?"Excellent!":pct>=60?"Good — keep reviewing!":"Study the explanations and retry."}`;
 }
 function restartQ(){idx=0;knew=0;didnt=0;document.getElementById("done").style.display="none";document.getElementById("quiz").style.display="flex";render();}
-function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
+function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";document.getElementById("hw2Dosirrah").style.display="none";document.getElementById("hw2dDone").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
 
 // ── NOTEBOOK ─────────────────────────────────────────────────────────────────
 function showNotebook(){
@@ -2865,6 +2979,11 @@ function nbShow(id){
   }
   const item=document.querySelector(`.nb-item[data-nb="${id}"]`);
   if(item){item.classList.add("nb-active"); item.scrollIntoView({block:"nearest"});}
+  if(window.innerWidth<=640) document.querySelector("#notebook .nb-sidebar").classList.remove("nb-open");
+}
+
+function toggleNbSidebar(nbId){
+  document.querySelector(`#${nbId} .nb-sidebar`).classList.toggle("nb-open");
 }
 
 // ── CLASS SELECTOR ─────────────────────────────────────────────────────────────
@@ -2875,6 +2994,8 @@ function showClassSelect(){
   document.getElementById("notebook").style.display="none";
   document.getElementById("notebook112").style.display="none";
   document.getElementById("quiz2App").style.display="none";
+  document.getElementById("hw2Dosirrah").style.display="none";
+  document.getElementById("hw2dDone").style.display="none";
   document.getElementById("classSelect").style.display="flex";
 }
 
@@ -2909,6 +3030,7 @@ function nbShow112(id){
   if(sec) sec.classList.add("nb-active");
   const item=document.querySelector(`#notebook112 .nb-item[data-nb112="${id}"]`);
   if(item){item.classList.add("nb-active"); item.scrollIntoView({block:"nearest"});}
+  if(window.innerWidth<=640) document.querySelector("#notebook112 .nb-sidebar").classList.remove("nb-open");
 }
 
 showClassSelect();
@@ -3578,7 +3700,9 @@ function q2SubmitFITB(){
   inp.disabled=true;
   const q=q2Active[q2Idx];
   const accepted=Array.isArray(q.answer)?q.answer:[q.answer];
-  const isCorrect=accepted.some(a=>val.toLowerCase().replace(/\s+/g," ")===a.toLowerCase().replace(/\s+/g," "));
+  const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+  const bare=s=>s.toLowerCase().replace(/\s+/g,"");
+  const isCorrect=accepted.some(a=>norm(val)===norm(a)||bare(val)===bare(a));
   inp.style.borderColor=isCorrect?"var(--green)":"var(--red)";
   q2ShowFeedback(isCorrect,q.explain);
   q2UpdateScore(isCorrect,q);
@@ -3601,7 +3725,9 @@ function q2SubmitOutput(){
   inp.disabled=true;
   const q=q2Active[q2Idx];
   const accepted=Array.isArray(q.answer)?q.answer:[q.answer];
-  const isCorrect=accepted.some(a=>val.toLowerCase().replace(/\s+/g," ")===a.toLowerCase().replace(/\s+/g," "));
+  const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+  const bare=s=>s.toLowerCase().replace(/\s+/g,"");
+  const isCorrect=accepted.some(a=>norm(val)===norm(a)||bare(val)===bare(a));
   inp.style.borderColor=isCorrect?"var(--green)":"var(--red)";
   q2ShowFeedback(isCorrect,q.explain);
   q2UpdateScore(isCorrect,q);
@@ -3872,6 +3998,697 @@ function q2ShowResults(){
     ${missedHtml}
   </div>`;
 }
+/* hw2 dosirrah injected below */
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HW2 DOSIRRAH EDITION — Standalone Quiz
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- HW2 DOSIRRAH QUIZ -->
+<div id="hw2Dosirrah">
+  <div class="hw2d-header">
+    <button class="back" onclick="goHome()">← Home</button>
+    <span class="hw2d-title">Quiz HW2 — dosirrah edition</span>
+    <span class="hw2d-badge">🎓 Dosirrah</span>
+    <span class="sbadge" id="hw2dScoreBadge">✓ 0 &nbsp;✗ 0</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="hw2dProgBar"></div></div>
+  <div class="counter" style="width:100%;max-width:780px;margin-bottom:10px;">
+    <span id="hw2dCtr"></span>
+    <button class="shuf" onclick="hw2dShuffle()">⇌ Shuffle</button>
+  </div>
+  <!-- Canvas for matplotlib-style plots -->
+  <div class="hw2d-canvas-wrap" id="hw2dCanvasWrap" style="display:none">
+    <canvas id="hw2dCanvas" class="hw2d-canvas" height="260"></canvas>
+  </div>
+  <div class="card" id="hw2dCard">
+    <div class="hw2d-section-tag" id="hw2dTag"></div>
+    <div class="question" id="hw2dQText"></div>
+    <div class="options" id="hw2dOpts"></div>
+    <div class="feedback" id="hw2dFeedback">
+      <div class="fb-head" id="hw2dFbHead"></div>
+      <div id="hw2dFbBody"></div>
+    </div>
+    <div class="act-row" id="hw2dActRow">
+      <button class="btn btn-knew" onclick="hw2dMarkKnew()">✓ Got it</button>
+      <button class="btn btn-didnt" onclick="hw2dMarkDidnt()">✗ Still learning</button>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-nav" onclick="hw2dPrev()">← Prev</button>
+    <button class="btn btn-nav" onclick="hw2dNext()">Next →</button>
+  </div>
+</div>
+
+<!-- HW2 DOSIRRAH DONE SCREEN -->
+<div id="hw2dDone">
+  <div class="sring" id="hw2dRing" style="border-color:#f59e0b;color:#f59e0b;"></div>
+  <h2>HW2 Complete! 🎓</h2>
+  <p id="hw2dDoneMsg" style="color:var(--muted);margin-bottom:28px;"></p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    <button class="btn btn-knew" onclick="hw2dRestart()">Restart</button>
+    <button class="btn btn-nav" onclick="goHome()">← Home</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  HW2 DOSIRRAH EDITION — Question Bank (46 questions)
+//  All questions sourced exclusively from CSCI 443 HW2 answers
+//  Types: tf = True/False (options auto-set to [True, False])
+//         mc = Multiple Choice
+//         plot+mc = show canvas plot then ask MC question
+// ══════════════════════════════════════════════════════════════════
+
+const hw2DosirrahBank = [
+
+  // ─── TYPES OF DATA ────────────────────────────────────────────
+  {section:"Types of Data",type:"tf",
+   q:"The set of even numbers {2, 4, 6, 8, ...} represents <strong>ordinal categorical</strong> data.",
+   correct:1,
+   explain:"Even numbers are <strong>numeric (discrete)</strong> data — not categorical. Arithmetic on them is meaningful and they can be ordered on a number line."},
+
+  {section:"Types of Data",type:"tf",
+   q:"The set of odd numbers {1, 3, 5, 7, ...} represents <strong>numeric</strong> data.",
+   correct:0,
+   explain:"Odd numbers are <strong>discrete numeric</strong> data — they are countable integers and arithmetic is meaningful."},
+
+  {section:"Types of Data",type:"tf",
+   q:"{January, February, ..., December} is an example of <strong>ordinal categorical</strong> data.",
+   correct:0,
+   explain:"Months have a <strong>meaningful natural ordering</strong> (Jan &lt; Feb &lt; ... &lt; Dec), but arithmetic doesn't apply. This is classic ordinal categorical data."},
+
+  {section:"Types of Data",type:"tf",
+   q:"{Vanilla, Chocolate, Mint, Strawberry} is an example of <strong>nominal categorical</strong> data.",
+   correct:0,
+   explain:"Ice cream flavors have <strong>no inherent ordering</strong> — no flavor is 'greater than' another. Alphabetical order is not meaningful here → nominal categorical."},
+
+  {section:"Types of Data",type:"mc",
+   q:"Which of the following is an example of <strong>nominal categorical</strong> data?",
+   options:["{Small, Medium, Large, XL}","{1st place, 2nd place, 3rd place}","{Red, Blue, Green}","{0.5 °C, 1.2 °C, 3.7 °C}"],
+   correct:2,
+   explain:"Colors like {Red, Blue, Green} have <strong>no natural ordering</strong> → nominal. S/M/L/XL and rankings have meaningful order (ordinal). Temperatures are continuous numeric."},
+
+  {section:"Types of Data",type:"mc",
+   q:"Which of the following is an example of <strong>continuous numeric</strong> data?",
+   options:["Number of students in a class","Result of a die roll (1–6)","Height of a person in meters","Number of cars crossing a bridge"],
+   correct:2,
+   explain:"Height can take any positive real value (e.g. 1.7312 m) — infinitely many values exist between any two points. The other options are discrete counts or bounded integers."},
+
+  // ─── RANDOM EXPERIMENTS ───────────────────────────────────────
+  {section:"Random Experiments",type:"tf",
+   q:"Rolling a six-sided die one time is called a <strong>trial</strong>.",
+   correct:0,
+   explain:"A <strong>trial</strong> is a single execution of a random experiment. Rolling the die once = one trial. Each subsequent roll is another trial."},
+
+  {section:"Random Experiments",type:"tf",
+   q:"I flip a coin and get 'Heads.' The word <strong>'Heads'</strong> is an outcome of the random experiment.",
+   correct:0,
+   explain:"'Heads' is the result of a single trial — that is the definition of an <strong>outcome</strong>. It is also an element of the sample space S = {Heads, Tails}."},
+
+  {section:"Random Experiments",type:"tf",
+   q:"A class had an average satisfaction score of 0.2. That mean satisfaction score is an <strong>outcome</strong> of a random experiment.",
+   correct:1,
+   explain:"A mean is a <strong>statistic computed from many outcomes</strong>, not a single outcome. An outcome is the result of one trial; the mean aggregates results across multiple trials."},
+
+  {section:"Random Experiments",type:"tf",
+   q:"The sample space for a single coin flip is {Heads, Tails}.",
+   correct:0,
+   explain:"The sample space S is the <strong>complete set of all possible outcomes</strong>. For one coin flip S = {Heads, Tails} — every conceivable result is listed."},
+
+  {section:"Random Experiments",type:"tf",
+   q:"Computing the area of a 1 m × 1 m square is a <strong>random experiment</strong>.",
+   correct:1,
+   explain:"This is <strong>deterministic</strong> — the result is always exactly 1 m². A random experiment requires genuine uncertainty before the trial. Deterministic computations don't qualify."},
+
+  {section:"Random Experiments",type:"tf",
+   q:"Drawing a card from a shuffled 52-card deck is a <strong>random experiment</strong>.",
+   correct:0,
+   explain:"The drawn card is uncertain before the draw — any of the 52 cards may be selected. This genuine uncertainty makes it a <strong>random experiment</strong>."},
+
+  {section:"Random Experiments",type:"mc",
+   q:"What is the <strong>sample space</strong> when rolling a standard 6-sided die?",
+   options:["{1, 2, 3}","{1, 2, 3, 4, 5, 6}","{Even numbers only}","{0, 1, 2, 3, 4, 5, 6}"],
+   correct:1,
+   explain:"S = <strong>{1, 2, 3, 4, 5, 6}</strong> lists every possible outcome. 0 is impossible, listing only {1,2,3} is incomplete, and 'even numbers only' omits odd results."},
+
+  // ─── RANDOM VARIABLES ─────────────────────────────────────────
+  {section:"Random Variables",type:"tf",
+   q:"The number of customers visiting a store in a day is a <strong>continuous</strong> random variable.",
+   correct:1,
+   explain:"You cannot have 2.7 customers — customer counts are whole numbers. This is a <strong>discrete</strong> random variable. Continuous variables take any real value in a range."},
+
+  {section:"Random Variables",type:"tf",
+   q:"The time between arrivals of subway trains is a <strong>continuous</strong> random variable.",
+   correct:0,
+   explain:"Time is measured on a continuum and can take any non-negative real value (e.g. 4.317 minutes) → <strong>continuous</strong> random variable, described by a PDF."},
+
+  {section:"Random Variables",type:"tf",
+   q:"The count of heads when flipping a coin multiple times is a <strong>discrete</strong> random variable.",
+   correct:0,
+   explain:"Head counts are non-negative integers {0, 1, 2, ...} with no fractional values possible → <strong>discrete</strong> random variable described by a PMF."},
+
+  {section:"Random Variables",type:"mc",
+   q:"A <strong>Probability Mass Function (PMF)</strong> is used for which type of random variable?",
+   options:["Continuous random variables","Discrete random variables","Both continuous and discrete","Neither — PMFs apply to events, not variables"],
+   correct:1,
+   explain:"PMFs assign probabilities to each <strong>discrete</strong> value: P[X = i] ≥ 0 and ΣP[X = i] = 1. Continuous variables use a <strong>PDF</strong> (Probability Density Function)."},
+
+  // ─── DISTRIBUTIONS — PLOT QUESTIONS ─────────────────────────
+  {section:"Distributions",type:"plot+mc",plotType:"diePMF",
+   q:"The bar chart shows the Probability Mass Function for a fair 6-sided die. What is <strong>P[X = 4]</strong>?",
+   options:["1/4 = 0.25","1/6 ≈ 0.167","1/3 ≈ 0.333","4/6 ≈ 0.667"],
+   correct:1,
+   explain:"All 6 outcomes of a fair die are equally likely: <strong>P[X = i] = 1/6 ≈ 0.167</strong> for every i. This is a discrete uniform distribution."},
+
+  {section:"Distributions",type:"plot+mc",plotType:"gaussianMeans",
+   q:"The plot shows Gaussian PDFs with σ = 1 and μ = −1, 0, 1, 3. As μ <strong>increases</strong>, what happens to the shape of the PDF?",
+   options:["The curve becomes wider and flatter","The curve shifts to the right","The peak probability density increases","The curve becomes left-skewed"],
+   correct:1,
+   explain:"μ is the <strong>location parameter</strong>. Increasing μ shifts the entire bell curve to the right — height and width are unchanged because σ stays the same."},
+
+  {section:"Distributions",type:"plot+mc",plotType:"gaussianSigmas",
+   q:"The plot shows three Gaussian PDFs all with μ = 0 but σ = 1, 2, and 4. Which curve corresponds to <strong>σ = 4</strong>?",
+   options:["The tallest, narrowest bell curve","The middle-height curve","The shortest, widest bell curve","They look identical"],
+   correct:2,
+   explain:"Larger σ → <strong>more spread out (wider) and shorter</strong>. Since total area = 1 always, a wider curve must be shorter. σ = 4 gives the widest, flattest bell."},
+
+  {section:"Distributions",type:"tf",
+   q:"Increasing σ causes the Gaussian PDF to become <strong>wider and flatter</strong> while the total area under the curve remains 1.",
+   correct:0,
+   explain:"∫f(x)dx = 1 always. A wider spread means the peak must be lower to compensate. Increasing σ → <strong>wider and flatter</strong>; decreasing σ → taller and narrower."},
+
+  {section:"Distributions",type:"mc",
+   q:"As a histogram's sample size grows from 100 → 1,000 → 10,000, what happens to a <strong>relative-frequency histogram</strong>?",
+   options:["It becomes less accurate","It more closely approximates the true PDF","It converges to a uniform distribution","Its bars decrease in height"],
+   correct:1,
+   explain:"By the <strong>Law of Large Numbers</strong>, as n → ∞ the relative-frequency histogram converges to the true underlying PDF. More samples = a more accurate shape."},
+
+  {section:"Distributions",type:"mc",
+   q:"For a <strong>continuous uniform distribution U[a, b]</strong>, what is the mean?",
+   options:["a + b","(a + b) / 2","(b − a) / 2","a × b"],
+   correct:1,
+   explain:"The mean of U[a, b] is the midpoint: μ = <strong>(a + b) / 2</strong>. Example: U[20, 40] → μ = (20 + 40) / 2 = 30."},
+
+  {section:"Distributions",type:"mc",
+   q:"The Gaussian PDF is symmetric around which parameter?",
+   options:["σ (standard deviation)","σ² (variance)","μ (mean)","0 (always zero)"],
+   correct:2,
+   explain:"The Gaussian is symmetric around its mean <strong>μ</strong>. The peak of the bell curve is at x = μ, and the curve is a perfect mirror image on both sides."},
+
+  {section:"Distributions",type:"tf",
+   q:"For a continuous random variable X, the probability <strong>P[X = 3.5] = 0</strong>.",
+   correct:0,
+   explain:"For continuous variables, probabilities are computed over <strong>intervals</strong>, not exact points. P[X = any single value] = 0. We use P[a ≤ X ≤ b] = ∫f(x)dx instead."},
+
+  {section:"Distributions",type:"mc",
+   q:"For a fair six-sided die, what is <strong>P[X = i]</strong> for each face i ∈ {1,2,3,4,5,6}?",
+   options:["1/36","1/6","6","1/3"],
+   correct:1,
+   explain:"A fair die has a discrete uniform distribution: <strong>P[X = i] = 1/6</strong> for each of the 6 outcomes. All are equal and they sum to 6 × (1/6) = 1."},
+
+  // ─── DESCRIPTIVE STATISTICS — S = {−4, −1, 2, 3, 6} ─────────
+  {section:"Descriptive Statistics",type:"mc",
+   q:"For <strong>S = {−4, −1, 2, 3, 6}</strong>, what is the <strong>range</strong>?",
+   options:["6","4","10","7"],
+   correct:2,
+   explain:"Range = max(S) − min(S) = 6 − (−4) = <strong>10</strong>. Don't forget to subtract the negative minimum — common mistake!"},
+
+  {section:"Descriptive Statistics",type:"mc",
+   q:"For <strong>S = {−4, −1, 2, 3, 6}</strong>, what is the <strong>median</strong>?",
+   options:["−1","2","3","1.2"],
+   correct:1,
+   explain:"Sorted: [−4, −1, <strong>2</strong>, 3, 6]. With n = 5 (odd), the median is the middle element at index 2 → <strong>2</strong>."},
+
+  {section:"Descriptive Statistics",type:"mc",
+   q:"For <strong>S = {−4, −1, 2, 3, 6}</strong>, what is the <strong>mean</strong>?",
+   options:["1.6","2.0","3.0","1.2"],
+   correct:3,
+   explain:"x̄ = (−4 + (−1) + 2 + 3 + 6) / 5 = 6 / 5 = <strong>1.2</strong>."},
+
+  {section:"Descriptive Statistics",type:"mc",
+   q:"For <strong>S = {−4, −1, 2, 3, 6}</strong>, compute the <strong>20th percentile</strong> using linear interpolation.<br>Step: i = (p/100)×(n−1) = 0.20×4 = 0.8. Interpolate between S[0]=−4 and S[1]=−1.",
+   options:["−4.0","−1.0","−1.6","0.0"],
+   correct:2,
+   explain:"i = 0.8 → −4 + 0.8×(−1 − (−4)) = −4 + 0.8×3 = −4 + 2.4 = <strong>−1.6</strong>. Linear interpolation places 80% weight on the upper neighbor."},
+
+  {section:"Descriptive Statistics",type:"tf",
+   q:"The 'nearest' interpolation method for percentiles always gives the same result as 'linear' interpolation.",
+   correct:1,
+   explain:"They differ when the rank index is fractional. <strong>Linear</strong> interpolates between neighbors; <strong>nearest</strong> rounds to the closest rank. For S at p=20: linear → −1.6, nearest → −1.0."},
+
+  {section:"Descriptive Statistics",type:"mc",
+   q:"A <strong>10% trimmed mean</strong> is computed by:",
+   options:["Removing values above Q3 and below Q1","Removing only the single maximum value","Removing the bottom 10% and top 10% of sorted values, then averaging the rest","Replacing extreme values with the median"],
+   correct:2,
+   explain:"A p% trimmed mean removes proportion p from <strong>each tail</strong> (bottom p% and top p%) of the sorted data, then averages the remaining values. It is robust to outliers in both tails."},
+
+  // ─── OUTLIERS ─────────────────────────────────────────────────
+  {section:"Effects of Outliers",type:"mc",
+   q:"Let <strong>S′ = {−4, −1, 2, 3, 60}</strong> (S with the 6 replaced by 60). What is the <strong>mean</strong> of S′?",
+   options:["1.2","3.0","12.0","60.0"],
+   correct:2,
+   explain:"x̄ = (−4 + (−1) + 2 + 3 + 60) / 5 = 60 / 5 = <strong>12</strong>. The original mean was 1.2 — one outlier (60 vs 6) pulled it to 12, a 10× change!"},
+
+  {section:"Effects of Outliers",type:"tf",
+   q:"Replacing the 6 with 60 in S = {−4, −1, 2, 3, 6} <strong>does not change the median</strong>.",
+   correct:0,
+   explain:"Sorted S′ = [−4, −1, 2, 3, 60] → median = <strong>2</strong> (same as original). The median is robust to outliers because it depends only on the middle value, not the tails."},
+
+  {section:"Effects of Outliers",type:"mc",
+   q:"Which statistic is <strong>MOST dramatically affected</strong> when 6 is replaced by 60 in S?",
+   options:["Median","Mean","IQR","Trimmed Mean"],
+   correct:1,
+   explain:"The <strong>mean</strong> jumped from 1.2 to 12 (10× change). Median stays at 2. IQR and trimmed mean are designed to be robust to outliers. Mean is the most sensitive."},
+
+  // ─── MEASURES OF DISPERSION ───────────────────────────────────
+  {section:"Measures of Dispersion",type:"mc",
+   q:"What is the correct formula for <strong>sample variance</strong>?",
+   options:["s² = (1/n) × Σ(Xᵢ − x̄)²","s² = (1/(n−1)) × Σ(Xᵢ − x̄)²","s² = Σ|Xᵢ − x̄| / n","s² = √(Σ(Xᵢ − x̄)²)"],
+   correct:1,
+   explain:"Sample variance uses <strong>n−1</strong> (Bessel's correction). Dividing by n gives population variance σ², which underestimates the true variance when using a sample mean x̄ estimated from the data."},
+
+  {section:"Measures of Dispersion",type:"tf",
+   q:"If data is measured in degrees Celsius (°C), the sample <strong>variance</strong> has units of °C².",
+   correct:0,
+   explain:"Variance squares the deviations, so the <strong>units are squared</strong>. This is why variance is hard to interpret directly — standard deviation (√variance) restores the original °C units."},
+
+  {section:"Measures of Dispersion",type:"mc",
+   q:"Why is <strong>standard deviation</strong> more interpretable than variance?",
+   options:["It is always a smaller number","It is in the same units as the original data","It is always a positive number","It is faster to compute"],
+   correct:1,
+   explain:"Standard deviation = √variance, which <strong>restores the original units</strong>. If data is in °C, std dev is also in °C — directly comparable to the data. Variance is in °C² (unintuitive)."},
+
+  {section:"Measures of Dispersion",type:"mc",
+   q:"Which measure of dispersion is <strong>MOST robust</strong> to outliers?",
+   options:["Mean Absolute Deviation","Sample Standard Deviation","Sample Variance","IQR (Interquartile Range)"],
+   correct:3,
+   explain:"<strong>IQR = Q3 − Q1</strong> uses only the middle 50% of data — extreme values in the tails have zero effect. Variance and std dev square deviations, which amplifies the influence of outliers."},
+
+  {section:"Measures of Dispersion",type:"tf",
+   q:"The sum of deviations from the mean Σ(Xᵢ − x̄) always equals <strong>zero</strong>, which is why it cannot be used directly as a measure of dispersion.",
+   correct:0,
+   explain:"Positive and negative deviations cancel perfectly: Σ(Xᵢ − x̄) = 0 always. This is why we use <strong>absolute values</strong> (MAD) or <strong>squared values</strong> (variance) to prevent cancellation."},
+
+  {section:"Measures of Dispersion",type:"mc",
+   q:"In a Tukey box-and-whisker plot, what do the <strong>whiskers</strong> extend to?",
+   options:["The minimum and maximum values","1.5 × IQR beyond Q1 and Q3 (last data point within that fence)","2 standard deviations from the mean","The 5th and 95th percentiles"],
+   correct:1,
+   explain:"Tukey convention: whiskers extend to the <strong>last data point within 1.5 × IQR</strong> of Q1 (lower) and Q3 (upper). Points beyond the whiskers are plotted individually as outliers."},
+
+  // ─── SPARK & PYSPARK ──────────────────────────────────────────
+  {section:"Spark & PySpark",type:"mc",
+   q:"In PySpark, which of the following is a <strong>transformation</strong> (not an action)?",
+   options:["collect()","show()","withColumn()","display()"],
+   correct:2,
+   explain:"<code>withColumn()</code> is a <strong>transformation</strong> — it creates a new DataFrame lazily without computing anything. <code>collect()</code>, <code>show()</code>, and <code>display()</code> are actions that trigger execution."},
+
+  {section:"Spark & PySpark",type:"mc",
+   q:"What does <strong>'lazy evaluation'</strong> mean in Apache Spark?",
+   options:["Spark processes data slowly to conserve resources","Transformations are queued and executed only when an action is called","Data is loaded from disk only on demand","Spark automatically caches all DataFrames in memory"],
+   correct:1,
+   explain:"Spark builds an execution plan (DAG) from transformations but <strong>runs no computation until an action</strong> (collect, show, display) is called. This lets Spark optimize the full pipeline before executing."},
+
+  {section:"Spark & PySpark",type:"tf",
+   q:"In Spark, <code>collect()</code> is a <strong>transformation</strong> that modifies the execution plan.",
+   correct:1,
+   explain:"<code>collect()</code> is an <strong>action</strong>, not a transformation. It triggers execution of all queued transformations and brings the results from the cluster back to the driver node."},
+
+  {section:"Spark & PySpark",type:"mc",
+   q:"Which PySpark command creates a new column <strong>'FamilySize'</strong> equal to the sum of 'SibSp' and 'Parch'?",
+   options:['df.select("SibSp" + "Parch")','df.withColumn("FamilySize", col("SibSp") + col("Parch"))','df.addColumn("FamilySize", "SibSp" + "Parch")',"df.merge('SibSp','Parch',name='FamilySize')"],
+   correct:1,
+   explain:"<code>df.withColumn(name, expr)</code> adds or replaces a column. <code>col()</code> creates a <strong>lazy column reference</strong>. The other options use invalid PySpark syntax."},
+
+  // ─── NUMPY vs PYTHON PERFORMANCE ─────────────────────────────
+  {section:"NumPy vs Python Performance",type:"plot+mc",plotType:"loglogPerf",
+   q:"The log-log plot compares execution time for computing a mean: Python loop vs NumPy, across N = 10¹ to 10⁶ samples. What <strong>best explains</strong> why NumPy is consistently faster?",
+   options:["NumPy automatically uses multiple CPU cores","NumPy uses pre-compiled C code with vectorized operations and no per-element type checking","NumPy stores data as compressed binary strings","Python loops add extra memory copies at each step"],
+   correct:1,
+   explain:"NumPy uses <strong>pre-compiled C/Fortran code</strong> and assumes all elements are the same dtype — no per-element type checking. Python loops have interpreter overhead for every iteration. NumPy also leverages optimized BLAS/LAPACK libraries."},
+
+  {section:"NumPy vs Python Performance",type:"tf",
+   q:"NumPy's vectorized operations are faster than Python loops primarily because they avoid per-element type checking and Python interpreter overhead.",
+   correct:0,
+   explain:"Correct. Python must check the type of each object at runtime. NumPy assumes a homogeneous fixed-dtype array and uses tight <strong>C loops without per-element overhead</strong>. This is why NumPy is orders of magnitude faster."},
+
+];
+
+// ══════════════════════════════════════════════════════════════════
+//  HW2 DOSIRRAH — STATE & NAVIGATION
+// ══════════════════════════════════════════════════════════════════
+
+let hw2dActive=[], hw2dIdx=0, hw2dKnew=0, hw2dDidnt=0, hw2dAnswered=false;
+
+function showHw2Dosirrah(){
+  ["home","quiz","done","notebook","notebook112","quiz2App","classSelect"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display="none";
+  });
+  document.getElementById("hw2dDone").style.display="none";
+  hw2dActive=hw2DosirrahBank.map(q=>({...q}));
+  hw2dIdx=0; hw2dKnew=0; hw2dDidnt=0; hw2dAnswered=false;
+  document.getElementById("hw2Dosirrah").style.display="flex";
+  hw2dRender();
+}
+
+function hw2dShuffle(){
+  for(let i=hw2dActive.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [hw2dActive[i],hw2dActive[j]]=[hw2dActive[j],hw2dActive[i]];
+  }
+  hw2dIdx=0; hw2dKnew=0; hw2dDidnt=0; hw2dAnswered=false;
+  hw2dRender();
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  HW2 DOSIRRAH — RENDER
+// ══════════════════════════════════════════════════════════════════
+
+function hw2dRender(){
+  if(hw2dIdx>=hw2dActive.length){hw2dShowDone();return;}
+  hw2dAnswered=false;
+  const q=hw2dActive[hw2dIdx];
+
+  document.getElementById("hw2dTag").textContent=q.section;
+  document.getElementById("hw2dQText").innerHTML=q.q;
+
+  // Canvas plot (shown before options for plot+mc questions)
+  const canvasWrap=document.getElementById("hw2dCanvasWrap");
+  if(q.plotType){
+    canvasWrap.style.display="block";
+    requestAnimationFrame(()=>hw2dDrawPlot(q.plotType));
+  } else {
+    canvasWrap.style.display="none";
+  }
+
+  // Build options (TF auto-uses True/False)
+  const wrap=document.getElementById("hw2dOpts"); wrap.innerHTML="";
+  const opts=(q.type==="tf")?["True","False"]:q.options;
+  const labels=["A","B","C","D"];
+  opts.forEach((opt,i)=>{
+    const btn=document.createElement("button");
+    btn.className="opt";
+    btn.innerHTML=`<span class="lbl">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick=()=>hw2dPick(i);
+    wrap.appendChild(btn);
+  });
+
+  // Reset feedback
+  const fb=document.getElementById("hw2dFeedback");
+  fb.style.display="none"; fb.className="feedback";
+  document.getElementById("hw2dFbHead").textContent="";
+  document.getElementById("hw2dFbBody").innerHTML="";
+  document.getElementById("hw2dActRow").style.display="none";
+
+  // Progress bar & counter
+  document.getElementById("hw2dProgBar").style.width=(hw2dIdx/hw2dActive.length*100)+"%";
+  document.getElementById("hw2dCtr").textContent=`Question ${hw2dIdx+1} of ${hw2dActive.length}`;
+  document.getElementById("hw2dScoreBadge").textContent=`\u2713 ${hw2dKnew} \u00a0\u2717 ${hw2dDidnt}`;
+}
+
+function hw2dPick(chosen){
+  if(hw2dAnswered)return;
+  hw2dAnswered=true;
+  const q=hw2dActive[hw2dIdx];
+  const correct=q.correct;
+  const isRight=(chosen===correct);
+
+  document.querySelectorAll("#hw2dOpts .opt").forEach((btn,i)=>{
+    btn.classList.add("disabled");
+    if(i===correct) btn.classList.add("correct-reveal");
+    if(i===chosen && isRight)  btn.classList.add("correct-chosen");
+    if(i===chosen && !isRight) btn.classList.add("wrong-chosen");
+  });
+
+  const fb=document.getElementById("hw2dFeedback");
+  fb.style.display="block";
+  if(isRight){
+    fb.className="feedback correct";
+    document.getElementById("hw2dFbHead").textContent="\u2713 Correct!";
+  } else {
+    fb.className="feedback wrong";
+    const lbl=["A","B","C","D"][correct];
+    document.getElementById("hw2dFbHead").textContent=`\u2717 Incorrect \u2014 correct answer is ${lbl}`;
+  }
+  document.getElementById("hw2dFbBody").innerHTML=q.explain||"";
+  document.getElementById("hw2dActRow").style.display="flex";
+}
+
+function hw2dMarkKnew(){
+  hw2dKnew++; hw2dIdx++;
+  document.getElementById("hw2dScoreBadge").textContent=`\u2713 ${hw2dKnew} \u00a0\u2717 ${hw2dDidnt}`;
+  hw2dRender();
+}
+function hw2dMarkDidnt(){
+  hw2dDidnt++; hw2dIdx++;
+  document.getElementById("hw2dScoreBadge").textContent=`\u2713 ${hw2dKnew} \u00a0\u2717 ${hw2dDidnt}`;
+  hw2dRender();
+}
+function hw2dNext(){if(!hw2dAnswered){hw2dIdx++;hw2dRender();}else{hw2dMarkDidnt();}}
+function hw2dPrev(){if(hw2dIdx>0){hw2dAnswered=false;hw2dIdx--;hw2dRender();}}
+
+function hw2dShowDone(){
+  document.getElementById("hw2Dosirrah").style.display="none";
+  const done=document.getElementById("hw2dDone");
+  done.style.display="flex";
+  const total=hw2dActive.length;
+  const pct=total?Math.round(hw2dKnew/total*100):0;
+  document.getElementById("hw2dRing").textContent=pct+"%";
+  const grade=pct>=80?"Excellent work, dosirrah! \uD83C\uDF93":pct>=60?"Good effort \u2014 keep reviewing! \uD83D\uDCDA":"Study the explanations and retry. \uD83D\uDCAA";
+  document.getElementById("hw2dDoneMsg").textContent=
+    `You got ${hw2dKnew} of ${total} correct on first try. ${grade}`;
+}
+
+function hw2dRestart(){
+  hw2dIdx=0; hw2dKnew=0; hw2dDidnt=0; hw2dAnswered=false;
+  document.getElementById("hw2dDone").style.display="none";
+  document.getElementById("hw2Dosirrah").style.display="flex";
+  hw2dRender();
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  HW2 DOSIRRAH — MATPLOTLIB-STYLE CANVAS PLOTS
+// ══════════════════════════════════════════════════════════════════
+
+function hw2dDrawPlot(type){
+  const canvas=document.getElementById("hw2dCanvas");
+  if(!canvas) return;
+  canvas.width=canvas.offsetWidth||560;
+  const ctx=canvas.getContext("2d");
+  const W=canvas.width, H=canvas.height;
+  ctx.fillStyle="#0d1117";
+  ctx.fillRect(0,0,W,H);
+  if(type==="diePMF")         hw2dPlotDiePMF(ctx,W,H);
+  else if(type==="gaussianMeans")  hw2dPlotGaussianMeans(ctx,W,H);
+  else if(type==="gaussianSigmas") hw2dPlotGaussianSigmas(ctx,W,H);
+  else if(type==="loglogPerf")     hw2dPlotLogLog(ctx,W,H);
+}
+
+// Shared helper: draw axes, title, labels; returns coordinate transform helpers
+function hw2dAxes(ctx,W,H,pad,xMin,xMax,yMin,yMax,xLbl,yLbl,title){
+  const {l:lp,r:rp,t:tp,b:bp}=pad;
+  const cw=W-lp-rp, ch=H-tp-bp;
+  const toX=v=>lp+(v-xMin)/(xMax-xMin)*cw;
+  const toY=v=>H-bp-(v-yMin)/(yMax-yMin)*ch;
+
+  // Axes lines
+  ctx.strokeStyle="#555"; ctx.lineWidth=1.2;
+  ctx.beginPath(); ctx.moveTo(lp,tp);    ctx.lineTo(lp,H-bp);   ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(lp,H-bp);  ctx.lineTo(W-rp,H-bp); ctx.stroke();
+
+  // Title
+  ctx.fillStyle="#d1d5db";
+  ctx.font=`bold ${Math.max(11,Math.floor(W*0.026))}px sans-serif`;
+  ctx.textAlign="center"; ctx.textBaseline="top";
+  ctx.fillText(title, W/2, 6);
+
+  // X label
+  ctx.fillStyle="#9ca3af";
+  ctx.font=`${Math.max(10,Math.floor(W*0.022))}px sans-serif`;
+  ctx.textAlign="center"; ctx.textBaseline="bottom";
+  ctx.fillText(xLbl, W/2, H-2);
+
+  // Y label (rotated)
+  ctx.save();
+  ctx.translate(11, H/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.textAlign="center"; ctx.textBaseline="top";
+  ctx.fillText(yLbl, 0, 0);
+  ctx.restore();
+
+  return {lp,rp,tp,bp,cw,ch,toX,toY};
+}
+
+// ── Plot 1: Die PMF (bar chart) ───────────────────────────────────
+function hw2dPlotDiePMF(ctx,W,H){
+  const pad={l:56,r:16,t:32,b:44};
+  const {lp,tp,bp,toX,toY}=hw2dAxes(ctx,W,H,pad,0.5,6.5,0,0.23,
+    "Outcome (die face)","Probability","PMF — Fair 6-Sided Die");
+
+  const barClrs=["#5b6ef5","#7c3aed","#10b981","#f59e0b","#ef4444","#8b5cf6"];
+  const barW=(toX(1.5)-toX(0.5))*0.6;
+  const prob=1/6;
+
+  for(let i=1;i<=6;i++){
+    const cx=toX(i), y0=toY(0), y1=toY(prob);
+    ctx.fillStyle=barClrs[i-1];
+    ctx.fillRect(cx-barW/2, y1, barW, y0-y1);
+    // X tick label
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(10,Math.floor(W*0.023))}px sans-serif`;
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText(String(i), cx, H-bp+4);
+  }
+  // Y grid + ticks
+  [0,1/6,2/6,3/6].forEach(v=>{
+    const y=toY(v);
+    ctx.strokeStyle="#2a2a3a"; ctx.lineWidth=0.6;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(lp,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(9,Math.floor(W*0.02))}px sans-serif`;
+    ctx.textAlign="right"; ctx.textBaseline="middle";
+    ctx.fillText(v.toFixed(2), lp-5, y);
+  });
+  // Annotation
+  ctx.fillStyle="#5b6ef5";
+  ctx.font=`bold ${Math.max(9,Math.floor(W*0.021))}px sans-serif`;
+  ctx.textAlign="left"; ctx.textBaseline="middle";
+  ctx.fillText("P = 1/6 \u2248 0.167", toX(3)+barW, toY(prob)-8);
+}
+
+// ── Plot 2: Gaussian PDFs — varying μ ────────────────────────────
+function hw2dPlotGaussianMeans(ctx,W,H){
+  const pad={l:60,r:16,t:32,b:44};
+  const mus=[-1,0,1,3], sigma=1;
+  const {lp,rp,tp,toX,toY}=hw2dAxes(ctx,W,H,pad,-4,7,0,0.44,
+    "x","Probability Density","\u03b4(x | \u03bc, \u03c3=1)  —  varying \u03bc");
+  const clrs=["#5b6ef5","#10b981","#f59e0b","#ef4444"];
+  const N=250;
+  const norm=(x,mu,sig)=>(1/(sig*Math.sqrt(2*Math.PI)))*Math.exp(-0.5*((x-mu)/sig)**2);
+
+  // X grid
+  [-4,-2,0,2,4,6].forEach(v=>{
+    ctx.strokeStyle="#1f2937"; ctx.lineWidth=0.6; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(toX(v),tp); ctx.lineTo(toX(v),H-pad.b); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(9,Math.floor(W*0.021))}px sans-serif`;
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText(v, toX(v), H-pad.b+4);
+  });
+
+  mus.forEach((mu,mi)=>{
+    ctx.strokeStyle=clrs[mi]; ctx.lineWidth=2.5; ctx.beginPath();
+    for(let k=0;k<=N;k++){
+      const x=-4+11*k/N;
+      const px=toX(x), py=toY(norm(x,mu,sigma));
+      k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+    // Legend
+    const ly=tp+14+mi*20;
+    ctx.strokeStyle=clrs[mi]; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(W-rp-72,ly); ctx.lineTo(W-rp-52,ly); ctx.stroke();
+    ctx.fillStyle=clrs[mi];
+    ctx.font=`${Math.max(9,Math.floor(W*0.022))}px sans-serif`;
+    ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.fillText(`\u03bc = ${mu}`, W-rp-49, ly);
+  });
+}
+
+// ── Plot 3: Gaussian PDFs — varying σ ────────────────────────────
+function hw2dPlotGaussianSigmas(ctx,W,H){
+  const pad={l:60,r:16,t:32,b:44};
+  const sigmas=[1,2,4], mu=0;
+  const {lp,rp,tp,toX,toY}=hw2dAxes(ctx,W,H,pad,-12,12,0,0.42,
+    "x","Probability Density","\u03b4(x | \u03bc=0)  —  varying \u03c3");
+  const clrs=["#ef4444","#f59e0b","#5b6ef5"];
+  const N=350;
+  const norm=(x,mu,sig)=>(1/(sig*Math.sqrt(2*Math.PI)))*Math.exp(-0.5*((x-mu)/sig)**2);
+
+  [-10,-5,0,5,10].forEach(v=>{
+    ctx.strokeStyle="#1f2937"; ctx.lineWidth=0.6; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(toX(v),tp); ctx.lineTo(toX(v),H-pad.b); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(9,Math.floor(W*0.021))}px sans-serif`;
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText(v, toX(v), H-pad.b+4);
+  });
+
+  sigmas.forEach((sig,si)=>{
+    ctx.strokeStyle=clrs[si]; ctx.lineWidth=2.5; ctx.beginPath();
+    for(let k=0;k<=N;k++){
+      const x=-12+24*k/N;
+      const px=toX(x), py=toY(norm(x,mu,sig));
+      k===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+    const ly=tp+14+si*20;
+    ctx.strokeStyle=clrs[si]; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(W-rp-72,ly); ctx.lineTo(W-rp-52,ly); ctx.stroke();
+    ctx.fillStyle=clrs[si];
+    ctx.font=`${Math.max(9,Math.floor(W*0.022))}px sans-serif`;
+    ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.fillText(`\u03c3 = ${sig}`, W-rp-49, ly);
+  });
+}
+
+// ── Plot 4: Log-log Performance Comparison ────────────────────────
+function hw2dPlotLogLog(ctx,W,H){
+  const pad={l:68,r:16,t:32,b:48};
+  const {lp,rp,tp,toX,toY}=hw2dAxes(ctx,W,H,pad,1,6,-5.5,0.5,
+    "N (log\u2081\u2080 scale)","Time (log\u2081\u2080 seconds)","Python Loop vs NumPy — Execution Time");
+
+  // Simulated data points (log10 of N, log10 of seconds)
+  const pyPts =[[1,-4.5],[2,-3.8],[3,-3.1],[4,-2.4],[5,-1.7],[6,-1.0]];
+  const npPts =[[1,-5.3],[2,-5.1],[3,-4.9],[4,-4.6],[5,-4.2],[6,-3.7]];
+
+  // X grid / ticks
+  for(let v=1;v<=6;v++){
+    ctx.strokeStyle="#1f2937"; ctx.lineWidth=0.6; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(toX(v),tp); ctx.lineTo(toX(v),H-pad.b); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(8,Math.floor(W*0.019))}px sans-serif`;
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    ctx.fillText(`1e${v}`, toX(v), H-pad.b+4);
+  }
+  // Y grid / ticks
+  [-5,-4,-3,-2,-1,0].forEach(v=>{
+    ctx.strokeStyle="#1f2937"; ctx.lineWidth=0.6; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(lp,toY(v)); ctx.lineTo(W-rp,toY(v)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle="#9ca3af";
+    ctx.font=`${Math.max(8,Math.floor(W*0.019))}px sans-serif`;
+    ctx.textAlign="right"; ctx.textBaseline="middle";
+    ctx.fillText(`1e${v}`, lp-5, toY(v));
+  });
+
+  function drawSeries(pts, color, label, lyOff){
+    ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.beginPath();
+    pts.forEach(([x,y],i)=>{ i===0?ctx.moveTo(toX(x),toY(y)):ctx.lineTo(toX(x),toY(y)); });
+    ctx.stroke();
+    pts.forEach(([x,y])=>{
+      ctx.fillStyle=color;
+      ctx.beginPath(); ctx.arc(toX(x),toY(y),4,0,2*Math.PI); ctx.fill();
+    });
+    const ly=tp+14+lyOff*22;
+    ctx.strokeStyle=color; ctx.lineWidth=2.5;
+    ctx.beginPath(); ctx.moveTo(W-rp-90,ly); ctx.lineTo(W-rp-70,ly); ctx.stroke();
+    ctx.fillStyle=color;
+    ctx.font=`${Math.max(9,Math.floor(W*0.022))}px sans-serif`;
+    ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.fillText(label, W-rp-67, ly);
+  }
+  drawSeries(pyPts,"#ef4444","Python loop",0);
+  drawSeries(npPts,"#5b6ef5","NumPy",1);
+}
+</script>
+
 </body>
 </html>

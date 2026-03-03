@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics Interactive Visualizer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       SIDEBAR
+       ====================================================== -->
+  <aside id="sidebar">
+    <div class="sidebar-title">Statistics</div>
+    <nav id="sidebar-nav">
+      <a href="#range"           class="nav-link">1. Range</a>
+      <a href="#mean"            class="nav-link">2. Mean</a>
+      <a href="#median"          class="nav-link">3. Median</a>
+      <a href="#percentile"      class="nav-link">4. Percentile</a>
+      <a href="#trimmed-mean"    class="nav-link">5. Trimmed Mean</a>
+      <a href="#mad"             class="nav-link">6. Mean Abs. Dev.</a>
+      <a href="#median-mad"      class="nav-link">7. Median Abs. Dev.</a>
+      <a href="#variance-sd"     class="nav-link">8. Variance &amp; SD</a>
+      <a href="#pop-variance"    class="nav-link">9. Population Variance</a>
+      <a href="#sample-variance" class="nav-link">10. Sample Variance</a>
+      <a href="#iqr"             class="nav-link">11. IQR</a>
+      <a href="#pop-vs-sample"   class="nav-link">12. Pop. vs Sample</a>
+      <a href="#zscore"          class="nav-link">13. Z-score / &Phi; / Erf</a>
+      <a href="#correlation"     class="nav-link">14. Correlation</a>
+    </nav>
+  </aside>
+
+  <!-- ======================================================
+       MAIN CONTENT
+       ====================================================== -->
+  <main id="content">
+
+    <!-- ── 1. Range ───────────────────────────────────────── -->
+    <section id="range" class="stat-section">
+      <h2><span class="section-num">1</span>Range</h2>
+      <div class="formula-block" id="range-formula"></div>
+      <div class="symbol-legend" id="range-legend"></div>
+      <div class="chart-area">
+        <svg id="range-svg" viewBox="0 0 600 160" class="chart-svg"></svg>
+        <div class="stat-readout" id="range-stats"></div>
+        <div class="input-row" id="range-inputs"></div>
+      </div>
+      <button class="explain-btn" id="range-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="range-explanation"></div>
+      <button class="stepbystep-btn" id="range-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="range-stepbystep-panel">
+        <div class="stepbystep-fields" id="range-stepbystep-fields"></div>
+        <div class="sbs-error" id="range-sbs-error"></div>
+        <button class="generate-calc-btn" id="range-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="range-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 2. Mean ────────────────────────────────────────── -->
+    <section id="mean" class="stat-section">
+      <h2><span class="section-num">2</span>Mean (Arithmetic Average)</h2>
+      <div class="formula-block" id="mean-formula"></div>
+      <div class="symbol-legend" id="mean-legend"></div>
+      <div class="chart-area">
+        <svg id="mean-svg" viewBox="0 0 600 180" class="chart-svg"></svg>
+        <div class="stat-readout" id="mean-stats"></div>
+        <div class="input-row" id="mean-inputs"></div>
+      </div>
+      <button class="explain-btn" id="mean-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="mean-explanation"></div>
+      <button class="stepbystep-btn" id="mean-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="mean-stepbystep-panel">
+        <div class="stepbystep-fields" id="mean-stepbystep-fields"></div>
+        <div class="sbs-error" id="mean-sbs-error"></div>
+        <button class="generate-calc-btn" id="mean-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="mean-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 3. Median ──────────────────────────────────────── -->
+    <section id="median" class="stat-section">
+      <h2><span class="section-num">3</span>Median</h2>
+      <div class="formula-block" id="median-formula"></div>
+      <div class="symbol-legend" id="median-legend"></div>
+      <div class="chart-area">
+        <svg id="median-svg" viewBox="0 0 600 180" class="chart-svg"></svg>
+        <div class="stat-readout" id="median-stats"></div>
+        <div class="input-row" id="median-inputs"></div>
+      </div>
+      <div class="btn-row">
+        <button class="explain-btn" id="median-explain-btn">&#9654; Explain</button>
+        <button class="secondary-btn" id="median-add-btn">+ Add Point</button>
+        <button class="secondary-btn" id="median-remove-btn">&#8722; Remove Point</button>
+      </div>
+      <div class="explanation-box" id="median-explanation"></div>
+      <button class="stepbystep-btn" id="median-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="median-stepbystep-panel">
+        <div class="stepbystep-fields" id="median-stepbystep-fields"></div>
+        <div class="sbs-error" id="median-sbs-error"></div>
+        <button class="generate-calc-btn" id="median-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="median-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 4. Percentile ──────────────────────────────────── -->
+    <section id="percentile" class="stat-section">
+      <h2><span class="section-num">4</span>Percentile — Linear Interpolation</h2>
+      <div class="formula-block" id="percentile-formula"></div>
+      <div class="symbol-legend" id="percentile-legend"></div>
+      <div class="chart-area">
+        <svg id="percentile-svg" viewBox="0 0 600 180" class="chart-svg"></svg>
+        <div class="stat-readout" id="percentile-stats"></div>
+        <div class="input-row" id="percentile-inputs">
+          <label class="slider-label">Percentile k&nbsp;=&nbsp;<span id="percentile-k-val">50</span></label>
+          <input type="range" id="percentile-slider" min="0" max="100" value="50" step="1" class="stat-slider">
+        </div>
+      </div>
+      <button class="explain-btn" id="percentile-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="percentile-explanation"></div>
+      <button class="stepbystep-btn" id="percentile-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="percentile-stepbystep-panel">
+        <div class="stepbystep-fields" id="percentile-stepbystep-fields"></div>
+        <div class="sbs-error" id="percentile-sbs-error"></div>
+        <button class="generate-calc-btn" id="percentile-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="percentile-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 5. Trimmed Mean ────────────────────────────────── -->
+    <section id="trimmed-mean" class="stat-section">
+      <h2><span class="section-num">5</span>Trimmed Mean</h2>
+      <div class="formula-block" id="trimmed-mean-formula"></div>
+      <div class="symbol-legend" id="trimmed-mean-legend"></div>
+      <div class="chart-area">
+        <svg id="trimmed-mean-svg" viewBox="0 0 600 180" class="chart-svg"></svg>
+        <div class="stat-readout" id="trimmed-mean-stats"></div>
+        <div class="input-row" id="trimmed-mean-inputs">
+          <label class="slider-label">Trim&nbsp;&alpha;&nbsp;=&nbsp;<span id="trim-pct-val">10</span>%</label>
+          <input type="range" id="trim-slider" min="0" max="40" value="10" step="5" class="stat-slider">
+        </div>
+      </div>
+      <button class="explain-btn" id="trimmed-mean-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="trimmed-mean-explanation"></div>
+      <button class="stepbystep-btn" id="trimmed-mean-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="trimmed-mean-stepbystep-panel">
+        <div class="stepbystep-fields" id="trimmed-mean-stepbystep-fields"></div>
+        <div class="sbs-error" id="trimmed-mean-sbs-error"></div>
+        <button class="generate-calc-btn" id="trimmed-mean-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="trimmed-mean-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 6. MAD ─────────────────────────────────────────── -->
+    <section id="mad" class="stat-section">
+      <h2><span class="section-num">6</span>Mean Absolute Deviation (MAD)</h2>
+      <div class="formula-block" id="mad-formula"></div>
+      <div class="symbol-legend" id="mad-legend"></div>
+      <div class="chart-area">
+        <svg id="mad-svg" viewBox="0 0 600 220" class="chart-svg"></svg>
+        <div class="stat-readout" id="mad-stats"></div>
+        <div class="input-row" id="mad-inputs"></div>
+      </div>
+      <button class="explain-btn" id="mad-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="mad-explanation"></div>
+      <button class="stepbystep-btn" id="mad-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="mad-stepbystep-panel">
+        <div class="stepbystep-fields" id="mad-stepbystep-fields"></div>
+        <div class="sbs-error" id="mad-sbs-error"></div>
+        <button class="generate-calc-btn" id="mad-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="mad-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 7. Median Absolute Deviation ──────────────────── -->
+    <section id="median-mad" class="stat-section">
+      <h2><span class="section-num">7</span>Median Absolute Deviation</h2>
+      <div class="formula-block" id="median-mad-formula"></div>
+      <div class="symbol-legend" id="median-mad-legend"></div>
+      <div class="chart-area">
+        <svg id="median-mad-svg" viewBox="0 0 600 220" class="chart-svg"></svg>
+        <div class="stat-readout" id="median-mad-stats"></div>
+        <div class="input-row" id="median-mad-inputs"></div>
+      </div>
+      <button class="explain-btn" id="median-mad-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="median-mad-explanation"></div>
+      <button class="stepbystep-btn" id="median-mad-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="median-mad-stepbystep-panel">
+        <div class="stepbystep-fields" id="median-mad-stepbystep-fields"></div>
+        <div class="sbs-error" id="median-mad-sbs-error"></div>
+        <button class="generate-calc-btn" id="median-mad-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="median-mad-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 8. Variance & SD ───────────────────────────────── -->
+    <section id="variance-sd" class="stat-section">
+      <h2><span class="section-num">8</span>Variance &amp; Standard Deviation</h2>
+      <div class="formula-block" id="variance-sd-formula"></div>
+      <div class="symbol-legend" id="variance-sd-legend"></div>
+      <div class="chart-area">
+        <svg id="variance-sd-svg" viewBox="0 0 600 250" class="chart-svg"></svg>
+        <div class="stat-readout" id="variance-sd-stats"></div>
+        <div class="input-row" id="variance-sd-inputs"></div>
+      </div>
+      <button class="explain-btn" id="variance-sd-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="variance-sd-explanation"></div>
+      <button class="stepbystep-btn" id="variance-sd-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="variance-sd-stepbystep-panel">
+        <div class="stepbystep-fields" id="variance-sd-stepbystep-fields"></div>
+        <div class="sbs-error" id="variance-sd-sbs-error"></div>
+        <button class="generate-calc-btn" id="variance-sd-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="variance-sd-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 9. Population Variance ─────────────────────────── -->
+    <section id="pop-variance" class="stat-section">
+      <h2><span class="section-num">9</span>Population Variance &sigma;&sup2;</h2>
+      <div class="formula-block" id="pop-variance-formula"></div>
+      <div class="symbol-legend" id="pop-variance-legend"></div>
+      <div class="chart-area">
+        <svg id="pop-variance-svg" viewBox="0 0 600 220" class="chart-svg"></svg>
+        <div class="stat-readout" id="pop-variance-stats"></div>
+        <div class="input-row" id="pop-variance-inputs"></div>
+      </div>
+      <button class="explain-btn" id="pop-variance-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="pop-variance-explanation"></div>
+      <button class="stepbystep-btn" id="pop-variance-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="pop-variance-stepbystep-panel">
+        <div class="stepbystep-fields" id="pop-variance-stepbystep-fields"></div>
+        <div class="sbs-error" id="pop-variance-sbs-error"></div>
+        <button class="generate-calc-btn" id="pop-variance-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="pop-variance-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 10. Sample Variance ────────────────────────────── -->
+    <section id="sample-variance" class="stat-section">
+      <h2><span class="section-num">10</span>Sample Variance s&sup2; (Bessel's Correction)</h2>
+      <div class="formula-block" id="sample-variance-formula"></div>
+      <div class="symbol-legend" id="sample-variance-legend"></div>
+      <div class="chart-area">
+        <svg id="sample-variance-svg" viewBox="0 0 600 220" class="chart-svg"></svg>
+        <div class="stat-readout" id="sample-variance-stats"></div>
+        <div class="input-row" id="sample-variance-inputs"></div>
+      </div>
+      <button class="explain-btn" id="sample-variance-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="sample-variance-explanation"></div>
+      <button class="stepbystep-btn" id="sample-variance-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="sample-variance-stepbystep-panel">
+        <div class="stepbystep-fields" id="sample-variance-stepbystep-fields"></div>
+        <div class="sbs-error" id="sample-variance-sbs-error"></div>
+        <button class="generate-calc-btn" id="sample-variance-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="sample-variance-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 11. IQR ────────────────────────────────────────── -->
+    <section id="iqr" class="stat-section">
+      <h2><span class="section-num">11</span>Interquartile Range (IQR)</h2>
+      <div class="formula-block" id="iqr-formula"></div>
+      <div class="symbol-legend" id="iqr-legend"></div>
+      <div class="chart-area">
+        <svg id="iqr-svg" viewBox="0 0 600 210" class="chart-svg"></svg>
+        <div class="stat-readout" id="iqr-stats"></div>
+        <div class="input-row" id="iqr-inputs"></div>
+      </div>
+      <button class="explain-btn" id="iqr-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="iqr-explanation"></div>
+      <button class="stepbystep-btn" id="iqr-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="iqr-stepbystep-panel">
+        <div class="stepbystep-fields" id="iqr-stepbystep-fields"></div>
+        <div class="sbs-error" id="iqr-sbs-error"></div>
+        <button class="generate-calc-btn" id="iqr-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="iqr-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 12. Population vs Sample ──────────────────────── -->
+    <section id="pop-vs-sample" class="stat-section">
+      <h2><span class="section-num">12</span>Population vs Sample Statistics</h2>
+      <div class="formula-block" id="pop-vs-sample-formula"></div>
+      <div class="symbol-legend" id="pop-vs-sample-legend"></div>
+      <div class="chart-area">
+        <svg id="pop-vs-sample-svg" viewBox="0 0 600 180" class="chart-svg"></svg>
+        <div class="stat-readout" id="pop-vs-sample-stats"></div>
+        <div class="input-row" id="pop-vs-sample-inputs">
+          <button class="toggle-btn" id="pop-vs-sample-toggle">Viewing: Population &mdash; Switch to Sample</button>
+        </div>
+      </div>
+      <button class="explain-btn" id="pop-vs-sample-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="pop-vs-sample-explanation"></div>
+      <button class="stepbystep-btn" id="pop-vs-sample-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="pop-vs-sample-stepbystep-panel">
+        <div class="stepbystep-fields" id="pop-vs-sample-stepbystep-fields"></div>
+        <div class="sbs-error" id="pop-vs-sample-sbs-error"></div>
+        <button class="generate-calc-btn" id="pop-vs-sample-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="pop-vs-sample-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 13. Z-score / Φ / Erf ──────────────────────────── -->
+    <section id="zscore" class="stat-section">
+      <h2><span class="section-num">13</span>Z-scores, &Phi; (Phi) &amp; Erf</h2>
+      <div class="formula-block" id="zscore-formula"></div>
+      <div class="symbol-legend" id="zscore-legend"></div>
+      <div class="chart-area">
+        <svg id="zscore-svg" viewBox="0 0 600 260" class="chart-svg"></svg>
+        <div class="stat-readout" id="zscore-stats"></div>
+        <div class="input-row" id="zscore-inputs">
+          <label class="slider-label">z&nbsp;=&nbsp;<span id="zscore-z-val">1.00</span></label>
+          <input type="range" id="zscore-slider" min="-4" max="4" value="1" step="0.05" class="stat-slider">
+        </div>
+      </div>
+      <button class="explain-btn" id="zscore-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="zscore-explanation"></div>
+      <button class="stepbystep-btn" id="zscore-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="zscore-stepbystep-panel">
+        <div class="stepbystep-fields" id="zscore-stepbystep-fields"></div>
+        <div class="sbs-error" id="zscore-sbs-error"></div>
+        <button class="generate-calc-btn" id="zscore-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="zscore-stepbystep-output"></div>
+      </div>
+    </section>
+
+    <!-- ── 14. Covariance & Correlation ──────────────────── -->
+    <section id="correlation" class="stat-section">
+      <h2><span class="section-num">14</span>Covariance &amp; Pearson Correlation</h2>
+      <div class="formula-block" id="correlation-formula"></div>
+      <div class="symbol-legend" id="correlation-legend"></div>
+      <div class="chart-area">
+        <svg id="correlation-svg" viewBox="0 0 600 310" class="chart-svg"></svg>
+        <div class="stat-readout" id="correlation-stats"></div>
+        <div class="input-row" id="correlation-inputs">
+          <button class="secondary-btn" id="correlation-add-btn">+ Add Point</button>
+          <button class="secondary-btn" id="correlation-remove-btn">&#8722; Remove Point</button>
+        </div>
+      </div>
+      <button class="explain-btn" id="correlation-explain-btn">&#9654; Explain</button>
+      <div class="explanation-box" id="correlation-explanation"></div>
+      <button class="stepbystep-btn" id="correlation-stepbystep-btn">&#9881; Generate Visual Formula</button>
+      <div class="stepbystep-panel" id="correlation-stepbystep-panel">
+        <div class="stepbystep-fields" id="correlation-stepbystep-fields"></div>
+        <div class="sbs-error" id="correlation-sbs-error"></div>
+        <button class="generate-calc-btn" id="correlation-generate-calc">&#9654; Calculate Steps</button>
+        <div class="stepbystep-output" id="correlation-stepbystep-output"></div>
+      </div>
+    </section>
+
+  </main><!-- #content -->
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
