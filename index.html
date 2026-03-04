@@ -86,9 +86,11 @@
   table{border-collapse:collapse;width:100%;margin:8px 0;}
   td,th{padding:5px 10px;border:1px solid #444;font-size:.88rem;}
 
-  /* ── HW2 DOSIRRAH QUIZ ── */
-  #hw2Dosirrah{display:none;flex-direction:column;align-items:center;min-height:100vh;padding:24px 16px 60px;}
-  #hw2dDone{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:40px 20px;text-align:center;}
+  /* ── HW2 / HW3 DOSIRRAH QUIZ ── */
+  #hw2Dosirrah,#hw3Dosirrah{display:none;flex-direction:column;align-items:center;min-height:100vh;padding:24px 16px 60px;}
+  #hw2dDone,#hw3dDone{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:40px 20px;text-align:center;}
+  .hw3d-img-wrap{width:100%;max-width:780px;margin-bottom:14px;text-align:center;}
+  .hw3d-img-wrap img{max-width:100%;border-radius:10px;border:1px solid var(--border);}
   .hw2d-header{width:100%;max-width:780px;display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
   .hw2d-title{flex:1;font-weight:800;font-size:.97rem;}
   .hw2d-badge{background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:30px;padding:3px 12px;font-size:.72rem;font-weight:700;white-space:nowrap;}
@@ -3150,6 +3152,7 @@ function buildHome(){
       {icon:"📖",title:"Study Notebook",    desc:"Review key concepts",         action:()=>showNotebook()},
       {icon:"🔬",title:"Visuals Lab",       desc:"Interactive statistics",      action:()=>window.open("DS_Interactive/index.html","_blank")},
       {icon:"🎓",title:"Quiz HW2 (dosirrah edition)",desc:"HW2 deep dive · 46 Qs · plots",action:()=>showHw2Dosirrah()},
+      {icon:"📐",title:"Quiz HW3 (dosirrah edition)",desc:"HW3 deep dive · 47 Qs · images + LaTeX",action:()=>showHw3Dosirrah()},
     ];
   menuItems.forEach(item=>{
     const c=document.createElement("div"); c.className="menu-card";
@@ -3271,7 +3274,7 @@ function showDone(){
     `You answered ${knew} of ${total} correctly on first try. ${pct>=80?"Excellent!":pct>=60?"Good — keep reviewing!":"Study the explanations and retry."}`;
 }
 function restartQ(){idx=0;knew=0;didnt=0;document.getElementById("done").style.display="none";document.getElementById("quiz").style.display="flex";render();}
-function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";document.getElementById("quiz3App").style.display="none";document.getElementById("hw2Dosirrah").style.display="none";document.getElementById("hw2dDone").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
+function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";document.getElementById("quiz3App").style.display="none";document.getElementById("hw2Dosirrah").style.display="none";document.getElementById("hw2dDone").style.display="none";document.getElementById("hw3Dosirrah").style.display="none";document.getElementById("hw3dDone").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
 
 // ── NOTEBOOK ─────────────────────────────────────────────────────────────────
 function showNotebook(){
@@ -3313,6 +3316,8 @@ function showClassSelect(){
   document.getElementById("quiz3App").style.display="none";
   document.getElementById("hw2Dosirrah").style.display="none";
   document.getElementById("hw2dDone").style.display="none";
+  document.getElementById("hw3Dosirrah").style.display="none";
+  document.getElementById("hw3dDone").style.display="none";
   document.getElementById("classSelect").style.display="flex";
 }
 
@@ -4393,6 +4398,53 @@ function q2ShowResults(){
   <p id="hw2dDoneMsg" style="color:var(--muted);margin-bottom:28px;"></p>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
     <button class="btn btn-knew" onclick="hw2dRestart()">Restart</button>
+    <button class="btn btn-nav" onclick="goHome()">← Home</button>
+  </div>
+</div>
+
+<!-- HW3 DOSIRRAH QUIZ -->
+<div id="hw3Dosirrah">
+  <div class="hw2d-header">
+    <button class="back" onclick="goHome()">← Home</button>
+    <span class="hw2d-title">Quiz HW3 — dosirrah edition</span>
+    <span class="hw2d-badge" style="background:linear-gradient(135deg,#10b981,#5b6ef5)">📐 Dosirrah</span>
+    <span class="sbadge" id="hw3dScoreBadge">✓ 0 &nbsp;✗ 0</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="hw3dProgBar"></div></div>
+  <div class="counter" style="width:100%;max-width:780px;margin-bottom:10px;">
+    <span id="hw3dCtr"></span>
+    <button class="shuf" onclick="hw3dShuffle()">⇌ Shuffle</button>
+  </div>
+  <!-- Image display for image questions -->
+  <div class="hw3d-img-wrap" id="hw3dImgWrap" style="display:none">
+    <img id="hw3dImg" src="" alt="question figure">
+  </div>
+  <div class="card" id="hw3dCard">
+    <div class="hw2d-section-tag" id="hw3dTag"></div>
+    <div class="question" id="hw3dQText"></div>
+    <div class="options" id="hw3dOpts"></div>
+    <div class="feedback" id="hw3dFeedback">
+      <div class="fb-head" id="hw3dFbHead"></div>
+      <div id="hw3dFbBody"></div>
+    </div>
+    <div class="act-row" id="hw3dActRow">
+      <button class="btn btn-knew" onclick="hw3dMarkKnew()">✓ Got it</button>
+      <button class="btn btn-didnt" onclick="hw3dMarkDidnt()">✗ Still learning</button>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-nav" onclick="hw3dPrev()">← Prev</button>
+    <button class="btn btn-nav" onclick="hw3dNext()">Next →</button>
+  </div>
+</div>
+
+<!-- HW3 DOSIRRAH DONE SCREEN -->
+<div id="hw3dDone">
+  <div class="sring" id="hw3dRing" style="border-color:#10b981;color:#10b981;"></div>
+  <h2>HW3 Complete! 📐</h2>
+  <p id="hw3dDoneMsg" style="color:var(--muted);margin-bottom:28px;"></p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    <button class="btn btn-knew" onclick="hw3dRestart()">Restart</button>
     <button class="btn btn-nav" onclick="goHome()">← Home</button>
   </div>
 </div>
@@ -5513,6 +5565,504 @@ function q3ShowResults(){
     </div>
     ${missedHtml}
   </div>`;
+}
+</script>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  HW3 DOSIRRAH EDITION — Question Bank (47 questions)
+//  Sources: CSCI 443 HW3 answers (Prof. Harrison)
+//  Types:  tf  = True/False (options auto-set True/False)
+//          mc  = Multiple Choice (4 options)
+//          img+mc = show image from New_443_data_2/ then MC question
+//  explain: may contain $$ ... $$ LaTeX rendered via MathJax
+// ══════════════════════════════════════════════════════════════════
+
+const hw3DosirrahBank = [
+
+  // ─── PART 1 · INTERPRETING PLOTS — HISTOGRAM ──────────────────
+  {section:"Part 1 · Histogram",type:"img+mc",imgSrc:"New_443_data_2/histo.png",
+   q:"<strong>(1.1)</strong> How many samples are represented in the histogram above (Figure 1.1)?",
+   options:["20","30","25","35"],
+   correct:1,
+   explain:`Sum the height of every bucket:<br>
+$$7+0+0+1+2+3+0+4+1+0+1+1+1+2+1+1+1+1+0+3 = \\boxed{30}$$`},
+
+  {section:"Part 1 · Histogram",type:"img+mc",imgSrc:"New_443_data_2/histo.png",
+   q:"<strong>(1.2)</strong> In the histogram above, what fraction of the samples are <strong>greater than or equal to 1.75</strong>?",
+   options:["0.10","0.20","0.15","0.30"],
+   correct:0,
+   explain:`The histogram has 20 bins spanning [0, 2], so each bin is 0.1 wide. The 3 samples in the uppermost bin span [1.8, 2]. For values ≥ 1.75 only that bin qualifies.<br>
+$$\\frac{3}{30} = \\boxed{0.1}$$`},
+
+  {section:"Part 1 · Histogram",type:"img+mc",imgSrc:"New_443_data_2/histo.png",
+   q:"<strong>(1.3)</strong> What are the <strong>tightest justifiable bounds</strong> on the median of the samples in the histogram above?",
+   options:["[0.7, 0.8]","[0.5, 1.0]","[0.6, 0.9]","[0.0, 0.5]"],
+   correct:0,
+   explain:`With \\(n=30\\) (even), the median is the average of the 15th and 16th order statistics:<br>
+$$\\tilde{x} = \\frac{x_{(15)}+x_{(16)}}{2}$$
+Both the 15th and 16th samples fall within the bucket spanning [0.7, 0.8].  Without knowing where within the bucket they land, the tightest justifiable bounds are:<br>
+$$\\boxed{\\tilde{x} \\in [0.7,\\; 0.8]}$$`},
+
+  // ─── PART 1 · INTERPRETING PLOTS — CONTOUR ────────────────────
+  {section:"Part 1 · Contour Plot",type:"img+mc",imgSrc:"New_443_data_2/contour.png",
+   q:"<strong>(1.4)</strong> Based on the contour plot above (Figure 1.2), place bounds on the <strong>elevation of point A</strong>.",
+   options:["[120, 180] ft","[180, 240] ft","[240, 300] ft","[300, 360] ft"],
+   correct:2,
+   explain:`Point A lies between the 240 ft and 300 ft contour lines. Therefore its elevation is bounded by:<br>$$\\boxed{240 \\leq \\text{elev}(A) \\leq 300 \\text{ ft}}$$`},
+
+  {section:"Part 1 · Contour Plot",type:"img+mc",imgSrc:"New_443_data_2/contour.png",
+   q:"<strong>(1.5)</strong> Based on the contour plot above, place bounds on the <strong>elevation of point B</strong>.",
+   options:["[0, 60] ft","[60, 120] ft","[120, 180] ft","[180, 240] ft"],
+   correct:1,
+   explain:`Point B lies between the 60 ft and 120 ft contour lines:<br>$$\\boxed{60 \\leq \\text{elev}(B) \\leq 120 \\text{ ft}}$$`},
+
+  {section:"Part 1 · Contour Plot",type:"img+mc",imgSrc:"New_443_data_2/contour.png",
+   q:"<strong>(1.6)</strong> Establish a <strong>lower bound</strong> on the elevation of the peak of the hill in the lower right portion of the contour plot above.",
+   options:["≥ 60 ft","≥ 120 ft","≥ 240 ft","= 300 ft"],
+   correct:1,
+   explain:`The outermost closed contour around the lower-right hill is 120 ft, so the peak must be <strong>at least 120 ft</strong>:<br>$$\\boxed{\\text{peak elevation} \\geq 120 \\text{ ft}}$$`},
+
+  // ─── PART 1 · INTERPRETING PLOTS — BOXPLOT ────────────────────
+  {section:"Part 1 · Box & Whisker Plot",type:"img+mc",imgSrc:"New_443_data_2/boxplot.png",
+   q:"<strong>(1.7)</strong> Estimate the <strong>Interquartile Range (IQR)</strong> for the data in Figure 1.3 above.",
+   options:["≈ 3","≈ 7","≈ 12","≈ 20"],
+   correct:1,
+   explain:`The IQR spans from Q1 (bottom of box, ≈ 46) to Q3 (top of box, ≈ 53):<br>$$\\text{IQR} = Q3 - Q1 \\approx 53 - 46 = \\boxed{7}$$`},
+
+  {section:"Part 1 · Box & Whisker Plot",type:"img+mc",imgSrc:"New_443_data_2/boxplot.png",
+   q:"<strong>(1.8)</strong> Estimate the <strong>median</strong> for the data in Figure 1.3 above.",
+   options:["≈ 47","≈ 49","≈ 53","≈ 42"],
+   correct:1,
+   explain:`The median is the horizontal red line inside the box. It sits just below 50, approximately $$\\boxed{49}$$.`},
+
+  {section:"Part 1 · Box & Whisker Plot",type:"img+mc",imgSrc:"New_443_data_2/boxplot.png",
+   q:"<strong>(1.9)</strong> Using the <strong>Tukey convention</strong> (matplotlib default), what do the whiskers in a box-and-whisker plot represent?",
+   options:["The minimum and maximum values","2 standard deviations from the mean","The farthest data points within Q1 − 1.5·IQR and Q3 + 1.5·IQR","The 5th and 95th percentiles"],
+   correct:2,
+   explain:`Tukey's convention: the upper whisker ends at the <strong>largest observation ≤ Q3 + 1.5×IQR</strong>, and the lower whisker ends at the <strong>smallest observation ≥ Q1 − 1.5×IQR</strong>. Points beyond the whiskers are plotted individually as outliers.`},
+
+  // ─── PART 2 · BIAS IDENTIFICATION ─────────────────────────────
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.1)</strong> A researcher measures a standard object multiple times with the same scale under controlled conditions. Each measurement varies slightly. What type of error is this?",
+   options:["Measurement bias","Random measurement error","Selection bias","Observer bias"],
+   correct:1,
+   explain:`<strong>Random measurement error</strong> — unpredictable variation in repeated measurements of the same quantity under identical conditions. Even a well-calibrated instrument has this. It is <em>not</em> systematic (it averages out over many trials).`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.2)</strong> A political pollster surveys opinion by calling landline numbers during daytime hours only. What type of error is this?",
+   options:["Non-response bias","Observer bias","Selection bias","Social desirability bias"],
+   correct:2,
+   explain:`<strong>Selection bias</strong> — the sampling method (landlines + daytime calls) systematically excludes people who only use mobile phones or who are unavailable during the day, producing a non-representative sample.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.3)</strong> A university sends a survey to all graduating students but only 30% respond. What type of bias is most applicable?",
+   options:["Selection bias","Non-response bias","Measurement bias","Observer bias"],
+   correct:1,
+   explain:`<strong>Non-response bias</strong> — a type of selection bias in which the 70% who do not respond likely differ systematically from those who do, skewing the results.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.4)</strong> A laser rangefinder used in a land survey is miscalibrated, causing all measurements to be off by a factor of 1.2. What type of error is this?",
+   options:["Random measurement error","Measurement bias","Selection bias","Observer bias"],
+   correct:1,
+   explain:`<strong>Measurement bias</strong> (systematic error) — the miscalibration produces a <em>consistent, predictable</em> offset in every reading. Unlike random error, this does not average out with more measurements.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.5)</strong> A pharmaceutical company recruits participants for a clinical trial exclusively from its own employees. What type of error is this?",
+   options:["Non-response bias","Observer bias","Social desirability bias","Selection bias"],
+   correct:3,
+   explain:`<strong>Selection bias</strong> — company employees are not representative of the general patient population (they share employer, culture, health benefits, etc.), so results may not generalize.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.6)</strong> A nurse measures patients' blood pressure with an automated monitor; each patient's readings vary slightly across repeated measurements. What type of error is this?",
+   options:["Measurement bias","Random measurement error","Observer bias","Non-response bias"],
+   correct:1,
+   explain:`<strong>Random measurement error</strong> — physiological fluctuation combined with instrument noise produces unpredictable variation around the true blood pressure, not a systematic offset.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.7)</strong> A police officer patrols a neighborhood with a known crime reputation and interprets residents' behavior through that lens. What type of bias is this?",
+   options:["Selection bias","Measurement bias","Observer bias","Non-response bias"],
+   correct:2,
+   explain:`<strong>Observer bias</strong> — the officer's prior expectations influence how they perceive and record residents' behavior. Similar to the Clever Hans effect, prior beliefs color interpretation.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.8)</strong> A researcher studying a weight-loss program asks participants to self-report their weight loss. What type of bias is most applicable?",
+   options:["Random measurement error","Selection bias","Self-reporting / social desirability bias","Measurement bias"],
+   correct:2,
+   explain:`<strong>Self-reporting bias</strong> (and specifically <strong>social desirability bias</strong>) — participants may unconsciously or deliberately overstate weight loss because they perceive that outcome to be socially desirable.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.9)</strong> A nutritional study uses two scales (one digital, one mechanical) but fails to record which participants used which. What is the primary error?",
+   options:["Observer bias","Measurement bias / instrumentation bias","Non-response bias","Selection bias"],
+   correct:1,
+   explain:`<strong>Measurement bias (instrumentation bias)</strong> — different instruments introduce systematic differences in readings. Because scale usage was not recorded, the effect cannot be identified or corrected in analysis.`},
+
+  {section:"Part 2 · Bias Identification",type:"mc",
+   q:"<strong>(2.10)</strong> Midway through a drug trial, a nurse accidentally reveals to control-group participants that they are receiving a placebo. Headache complaints in the control group immediately increase. What type of bias is this?",
+   options:["Selection bias","Observer bias","Measurement bias","Self-reporting bias (nocebo / expectancy effect)"],
+   correct:3,
+   explain:`<strong>Self-reporting bias via a nocebo/expectancy effect</strong> — knowing they received a placebo (blinding failure) changes participants' subjective perception and reporting of symptoms, not the actual treatment.`},
+
+  // ─── PART 3 · VARIANCE, COVARIANCE AND CORRELATION ────────────
+  {section:"Part 3 · Variance & Distributions",type:"mc",
+   q:"<strong>(3.1)</strong> A random variable \\(X \\sim \\mathcal{N}(\\mu=50,\\, \\sigma=10)\\). What is the <strong>distribution variance</strong>?",
+   options:["10","50","100","25"],
+   correct:2,
+   explain:`Variance is the square of the standard deviation:<br>
+$$\\text{Var}(X) = \\sigma^2 = 10^2 = \\boxed{100}$$`},
+
+  {section:"Part 3 · Variance & Distributions",type:"mc",
+   q:"<strong>(3.2)</strong> A random variable has PDF \\(f(x)=0.1\\,e^{-0.1x}\\) for \\(x \\geq 0\\). What is its <strong>distribution mean</strong>?",
+   options:["0.1","5","10","100"],
+   correct:2,
+   explain:`This is an exponential distribution with rate \\(\\lambda = 0.1\\). Its mean is:<br>
+$$\\mu = \\int_0^{\\infty} x \\cdot 0.1\\,e^{-0.1x}\\,dx = \\frac{1}{\\lambda} = \\frac{1}{0.1} = \\boxed{10}$$`},
+
+  {section:"Part 3 · Variance & Distributions",type:"mc",
+   q:"<strong>(3.3)</strong> A <strong>triangular distribution</strong> has parameters \\(a\\) (minimum), \\(b\\) (maximum), \\(c\\) (mode). Which formula gives its variance?",
+   options:[
+     "\\(\\dfrac{a^2+b^2+c^2+ab+ac+bc}{18}\\)",
+     "\\(\\dfrac{a^2+b^2+c^2-ab-ac-bc}{18}\\)",
+     "\\(\\dfrac{(b-a)^2}{12}\\)",
+     "\\(\\dfrac{(a+b+c)^2}{9}\\)"],
+   correct:1,
+   explain:`For a triangular distribution:<br>
+$$\\text{Var}(X) = \\frac{a^2 + b^2 + c^2 - ab - ac - bc}{18}$$
+This is derived by computing \\(E[X^2] - \\mu^2\\) with \\(\\mu = \\frac{a+b+c}{3}\\).`},
+
+  {section:"Part 3 · Variance & Distributions",type:"mc",
+   q:"<strong>(3.4)</strong> Let \\(X \\sim U[20,40]\\). What is the <strong>distribution mean</strong>?",
+   options:["20","30","40","10"],
+   correct:1,
+   explain:`For a uniform distribution on \\([a,b]\\):<br>
+$$\\mu = \\int_{20}^{40} x \\cdot \\frac{1}{40-20}\\,dx = \\frac{1}{20}\\left.\\frac{x^2}{2}\\right|_{20}^{40} = \\frac{40^2-20^2}{40} = \\boxed{30}$$`},
+
+  {section:"Part 3 · Variance & Distributions",type:"mc",
+   q:"<strong>(3.5)</strong> For \\(X \\sim U[20,40]\\), what is the <strong>distribution variance</strong>?",
+   options:["\\(400/12 \\approx 33\\tfrac{1}{3}\\)","20","400","\\(1/3\\)"],
+   correct:0,
+   explain:`The variance of a uniform distribution on \\([a,b]\\) is:<br>
+$$\\text{Var}(X) = \\frac{(b-a)^2}{12} = \\frac{(40-20)^2}{12} = \\frac{400}{12} = \\boxed{33\\tfrac{1}{3}}$$`},
+
+  // ─── PART 3 · CORRELATION IMAGES ──────────────────────────────
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation1.png",
+   q:"<strong>(3.6)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated","Cannot determine"],
+   correct:0,
+   explain:`The scatter plot shows an upward trend — as X increases, Y increases. The Pearson correlation coefficient \\(r_{xy} > 0\\), so X and Y are <strong>positively correlated</strong>.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation2.png",
+   q:"<strong>(3.7)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated","Strongly positively correlated"],
+   correct:2,
+   explain:`Even though Y spreads much more than X (larger std dev in Y), there is no linear trend between X and Y. Pearson correlation measures <em>linear</em> relationships only: \\(r_{xy} \\approx 0\\) → <strong>uncorrelated</strong>.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation3.png",
+   q:"<strong>(3.8)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated","Cannot determine"],
+   correct:1,
+   explain:`The scatter plot shows a downward trend — as X increases, Y decreases. Therefore \\(r_{xy} < 0\\): X and Y are <strong>negatively correlated</strong>.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation4.png",
+   q:"<strong>(3.9)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated","Slightly negatively correlated"],
+   correct:2,
+   explain:`No consistent linear trend is visible — the data points show no systematic upward or downward pattern. Pearson \\(r_{xy} \\approx 0\\): <strong>uncorrelated</strong>.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation5.png",
+   q:"<strong>(3.10)</strong> Examine the scatter plot above. Even though X and Y appear <strong>dependent</strong>, are they correlated under the Pearson measure?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated (despite clear dependence)","Strongly negatively correlated"],
+   correct:2,
+   explain:`Although X and Y are clearly <em>dependent</em> (the shape is non-random), Pearson correlation only captures <strong>linear</strong> relationships. A symmetric non-linear relationship (e.g., a parabola symmetric about its axis) has \\(r_{xy} \\approx 0\\): <strong>uncorrelated</strong> per Pearson, yet dependent.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation6.png",
+   q:"<strong>(3.11)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Positively correlated","Negatively correlated","Uncorrelated","Cannot determine"],
+   correct:0,
+   explain:`The data points trend upward from left to right → \\(r_{xy} > 0\\): X and Y are <strong>positively correlated</strong>.`},
+
+  {section:"Part 3 · Pearson Correlation",type:"img+mc",imgSrc:"New_443_data_2/correlation7.png",
+   q:"<strong>(3.12)</strong> Examine the scatter plot above. Are X and Y <strong>positively correlated, negatively correlated, or uncorrelated</strong>?",
+   options:["Uncorrelated","Slightly positively correlated","Negatively correlated","Strongly positively correlated"],
+   correct:1,
+   explain:`The function is not symmetric about the y-axis — it is higher on the right edge than the left, giving a <em>slight</em> upward trend over the range shown. Whether a bounded periodic function has positive or negative correlation depends on the chosen domain. Here: <strong>slightly positively correlated</strong>.`},
+
+  // ─── PART 3 · COVARIANCE & PEARSON CALCULATION ────────────────
+  {section:"Part 3 · Covariance Calculation",type:"mc",
+   q:`<strong>(3.13)</strong> Compute the <strong>sample covariance</strong> between X = {10, 20, 30, 40} and Y = {15, 30, 60, 90}.`,
+   options:["318.75 (population cov)","425 (sample cov)","200","500"],
+   correct:1,
+   explain:`First compute the sample means:
+$$\\bar{x} = \\frac{10+20+30+40}{4} = 25 \\qquad \\bar{y} = \\frac{15+30+60+90}{4} = 48.75$$
+Then apply the sample covariance formula with \\(n-1=3\\):
+$$s_{xy} = \\frac{1}{3}\\Big[(10-25)(15-48.75)+(20-25)(30-48.75)+(30-25)(60-48.75)+(40-25)(90-48.75)\\Big]$$
+$$= \\frac{1}{3}\\Big[(-15)(-33.75)+(-5)(-18.75)+(5)(11.25)+(15)(41.25)\\Big]$$
+$$= \\frac{1}{3}\\Big[506.25+93.75+56.25+618.75\\Big] = \\frac{1275}{3} = \\boxed{425}$$`},
+
+  {section:"Part 3 · Pearson Correlation",type:"mc",
+   q:`<strong>(3.14)</strong> Compute the Pearson correlation coefficient for X = {1, 2, 3, 4, 5} and Y = {4, 4, 4, 4, 4}.`,
+   options:["1","−1","0","0.5"],
+   correct:2,
+   explain:`Since Y is constant, every \\(y_i - \\bar{y} = 0\\). Therefore:
+$$s_{xy} = \\frac{1}{n-1}\\sum_{i=1}^n (x_i - \\bar{x})\\underbrace{(y_i - \\bar{y})}_{=\\,0} = 0$$
+And thus:
+$$r_{xy} = \\frac{s_{xy}}{s_x \\, s_y} = \\frac{0}{s_x \\cdot s_y} = \\boxed{0}$$`},
+
+  {section:"Part 3 · Pearson Correlation",type:"mc",
+   q:`<strong>(3.15)</strong> Compute the Pearson correlation coefficient for X = {1, 3, 5, 7} and Y = {8, 6, 5, 3}.`,
+   options:["≈ +0.992","≈ −0.992","0","≈ −0.500"],
+   correct:1,
+   explain:`Compute means: \\(\\bar{x}=4,\\; \\bar{y}=5.5\\).<br>
+Sample covariance:
+$$s_{xy} = \\frac{1}{3}\\Big[(1-4)(8-5.5)+(3-4)(6-5.5)+(5-4)(5-5.5)+(7-4)(3-5.5)\\Big]$$
+$$= \\frac{1}{3}(-7.5-0.5-0.5-7.5) = \\frac{-16}{3} \\approx -5.333$$
+Standard deviations:
+$$s_x = \\sqrt{\\frac{(-3)^2+(-1)^2+(1)^2+(3)^2}{3}} = \\sqrt{\\frac{20}{3}} \\approx 2.582$$
+$$s_y = \\sqrt{\\frac{(2.5)^2+(0.5)^2+(-0.5)^2+(-2.5)^2}{3}} = \\sqrt{\\frac{13}{3}} \\approx 2.082$$
+Pearson coefficient:
+$$r_{xy} = \\frac{-5.333}{2.582 \\times 2.082} \\approx \\boxed{-0.992}$$`},
+
+  // ─── PART 4 · POPULATION vs SAMPLE STATISTICS ─────────────────
+  {section:"Part 4 · Sample vs Population",type:"mc",
+   q:"<strong>(4.1a)</strong> For S = {4, 7, 9, 12, 15, −9}, what is the <strong>sample mean</strong>?",
+   options:["6.0","19/3 ≈ 6.33","8.0","7.5"],
+   correct:1,
+   explain:`$$\\bar{x} = \\frac{4+7+9+12+15+(-9)}{6} = \\frac{38}{6} = \\boxed{6\\tfrac{1}{3} \\approx 6.33}$$`},
+
+  {section:"Part 4 · Sample vs Population",type:"tf",
+   q:"<strong>(4.1b)</strong> The <strong>population mean</strong> and the <strong>sample mean</strong> are computed using the same formula (1/n · Σxᵢ), so they are equal when applied to the same data set.",
+   correct:0,
+   explain:`<strong>True.</strong> Both use \\(\\frac{1}{n}\\sum x_i\\). The distinction between population and sample arises in <em>variance</em> (1/n vs 1/(n−1)), not in the mean formula.`},
+
+  {section:"Part 4 · Sample vs Population",type:"mc",
+   q:"<strong>(4.1c)</strong> For S = {4, 7, 9, 12, 15, −9}, what is the <strong>sample variance</strong>?",
+   options:["≈ 59.22","≈ 71.07","≈ 8.43","≈ 50.00"],
+   correct:1,
+   explain:`With \\(\\bar{x} = \\frac{38}{6}\\) and \\(n=6\\):
+$$s^2 = \\frac{1}{n-1}\\sum_{i=1}^{n}(x_i-\\bar{x})^2 = \\frac{1}{5}\\sum(x_i-\\bar{x})^2 \\approx \\boxed{71.07}$$
+(Uses Bessel's correction \\(n-1\\) because \\(\\bar{x}\\) is estimated from the data.)`},
+
+  {section:"Part 4 · Sample vs Population",type:"mc",
+   q:"<strong>(4.1d)</strong> Assume S = {4, 7, 9, 12, 15, −9} is the entire population. What is the <strong>population variance</strong>?",
+   options:["≈ 59.22","≈ 71.07","≈ 8.43","≈ 50.00"],
+   correct:0,
+   explain:`Population variance uses \\(\\frac{1}{n}\\) (no Bessel's correction):
+$$\\sigma^2 = \\frac{1}{n}\\sum_{i=1}^{n}(x_i-\\mu)^2 \\approx \\boxed{59.22}$$`},
+
+  {section:"Part 4 · Sample vs Population",type:"mc",
+   q:"<strong>(4.1e)</strong> For S = {4, 7, 9, 12, 15, −9}, what is the <strong>sample standard deviation</strong>?",
+   options:["≈ 7.70","≈ 8.43","≈ 6.33","≈ 71.07"],
+   correct:1,
+   explain:`$$s = \\sqrt{s^2} = \\sqrt{71.07} \\approx \\boxed{8.43}$$
+(Same units as the original data, making it more interpretable than variance.)`},
+
+  {section:"Part 4 · Sample vs Population",type:"mc",
+   q:"<strong>(4.1f)</strong> Assume S = {4, 7, 9, 12, 15, −9} is the entire population. What is the <strong>population standard deviation</strong>?",
+   options:["≈ 7.70","≈ 8.43","≈ 6.33","≈ 59.22"],
+   correct:0,
+   explain:`$$\\sigma = \\sqrt{\\sigma^2} = \\sqrt{59.22} \\approx \\boxed{7.70}$$`},
+
+  // ─── PART 5 · Z-SCORES, PHI, ERF ─────────────────────────────
+  {section:"Part 5 · Z-scores & Probability",type:"mc",
+   q:"<strong>(5.1a)</strong> A national math test has mean 500 and standard deviation 100. John scored 620. What is John's <strong>Z-score</strong>?",
+   options:["0.8","1.0","1.2","1.5"],
+   correct:2,
+   explain:`$$Z = \\frac{X - \\mu}{\\sigma} = \\frac{620 - 500}{100} = \\boxed{1.2}$$`},
+
+  {section:"Part 5 · Z-scores & Probability",type:"mc",
+   q:"<strong>(5.1b)</strong> Given John's Z-score of 1.2, what is the probability that a randomly selected student scored <strong>less than John</strong>? (i.e., what is Φ(1.2)?)",
+   options:["0.7734","0.8413","0.8849","0.9452"],
+   correct:2,
+   explain:`$$P[X < 620] = \\Phi(Z) = \\Phi(1.2) = \\boxed{0.8849}$$
+Roughly 88.5% of students scored below John.`},
+
+  {section:"Part 5 · Z-scores & Probability",type:"mc",
+   q:"<strong>(5.2)</strong> Steel rods follow \\(X \\sim \\mathcal{N}(100\\text{ cm},\\; \\sigma=2\\text{ cm})\\). What is \\(P[X < 96 \\text{ or } X > 104]\\)?",
+   options:["0.9545","0.0455","0.6827","0.3173"],
+   correct:1,
+   explain:`Convert to Z-scores: \\(Z_{96}=\\frac{96-100}{2}=-2\\), \\(Z_{104}=\\frac{104-100}{2}=2\\).<br>
+Using the error function relationship:
+$$P[-z \\leq Z \\leq z] = \\text{erf}\\!\\left(\\frac{z}{\\sqrt{2}}\\right)$$
+The probability of falling <em>within</em> 2 standard deviations:
+$$P[-2 \\leq Z \\leq 2] = \\text{erf}\\!\\left(\\frac{2}{\\sqrt{2}}\\right) \\approx 0.9545$$
+Therefore the probability of falling <em>outside</em>:
+$$P[X<96 \\text{ or } X>104] = 1 - 0.9545 = \\boxed{0.0455}$$
+(About a 4.55% chance — the "2-sigma" rule.)`},
+
+  // ─── PART 6 · SAMPLING DISTRIBUTIONS ─────────────────────────
+  {section:"Part 6 · Sampling Distributions",type:"mc",
+   q:"<strong>(6.1)</strong> You draw \\(m\\) sample means, each computed from \\(n\\) samples drawn from a <strong>log-normal</strong> distribution. As \\(m\\) grows, what shape does the distribution of sample means take according to the Central Limit Theorem?",
+   options:["Log-normal","Uniform","Gaussian (Normal)","Exponential"],
+   correct:2,
+   explain:`The <strong>Central Limit Theorem (CLT)</strong> states: regardless of the underlying distribution, the distribution of sample means converges to a <strong>Gaussian (Normal)</strong> as the number of samples per mean (\\(n\\)) grows. Even for a skewed log-normal source, with enough samples the histogram of means becomes bell-shaped.`},
+
+  {section:"Part 6 · Sampling Distributions",type:"mc",
+   q:"<strong>(6.2)</strong> When \\(m=10{,}000\\) sample means are computed from \\(n=5\\) log-normal samples each, what shape does the histogram of sample means most closely resemble?",
+   options:["Log-normal (skewed)","Uniform","Gaussian (bell-shaped)","Bimodal"],
+   correct:2,
+   explain:`With 10,000 repetitions and the CLT in effect, the histogram of sample means closely approximates a <strong>Gaussian</strong>. More repetitions (large \\(m\\)) increase the histogram resolution but the shape is already determined by the CLT.`},
+
+  {section:"Part 6 · Sampling Distributions",type:"mc",
+   q:"<strong>(6.5)</strong> As the number of samples per sample mean (\\(n\\)) increases (e.g., 5 → 10 → 20), what happens to the sampling distribution of sample means?",
+   options:["It becomes wider and more spread out","It converges to the original log-normal distribution","It becomes more tightly packed around the distribution mean","The shape does not change"],
+   correct:2,
+   explain:`The <strong>standard error</strong> (std dev of the sampling distribution) equals:
+$$\\text{SE} = \\frac{\\sigma}{\\sqrt{n}}$$
+As \\(n\\) increases, SE decreases → the sampling distribution narrows and concentrates more tightly around the true distribution mean. This demonstrates why larger samples give more precise estimates.`},
+
+  {section:"Part 6 · Sampling Distributions",type:"mc",
+   q:"<strong>(6 — concept)</strong> What is the <strong>standard error</strong> of the sampling distribution of sample means?",
+   options:["\\(\\sigma\\) (population std dev)","\\(\\sigma / \\sqrt{n}\\)","\\(\\sigma^2 / n\\)","\\(n / \\sigma\\)"],
+   correct:1,
+   explain:`The standard error (SE) measures the spread of sample means around the true population mean:
+$$\\text{SE} = \\frac{\\sigma}{\\sqrt{n}}$$
+Increasing \\(n\\) reduces SE by \\(\\sqrt{n}\\), which is why doubling the sample size reduces uncertainty by a factor of \\(\\sqrt{2}\\).`},
+
+];
+
+// ══════════════════════════════════════════════════════════════════
+//  HW3 DOSIRRAH — STATE & NAVIGATION
+// ══════════════════════════════════════════════════════════════════
+
+let hw3dActive=[], hw3dIdx=0, hw3dKnew=0, hw3dDidnt=0, hw3dAnswered=false;
+
+function showHw3Dosirrah(){
+  ["home","quiz","done","notebook","notebook112","quiz2App","quiz3App","classSelect"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display="none";
+  });
+  document.getElementById("hw2Dosirrah").style.display="none";
+  document.getElementById("hw2dDone").style.display="none";
+  document.getElementById("hw3dDone").style.display="none";
+  hw3dActive=hw3DosirrahBank.map(q=>({...q}));
+  hw3dIdx=0; hw3dKnew=0; hw3dDidnt=0; hw3dAnswered=false;
+  document.getElementById("hw3Dosirrah").style.display="flex";
+  hw3dRender();
+}
+
+function hw3dShuffle(){
+  for(let i=hw3dActive.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [hw3dActive[i],hw3dActive[j]]=[hw3dActive[j],hw3dActive[i]];
+  }
+  hw3dIdx=0; hw3dKnew=0; hw3dDidnt=0; hw3dAnswered=false;
+  hw3dRender();
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  HW3 DOSIRRAH — RENDER
+// ══════════════════════════════════════════════════════════════════
+
+function hw3dRender(){
+  if(hw3dIdx>=hw3dActive.length){hw3dShowDone();return;}
+  hw3dAnswered=false;
+  const q=hw3dActive[hw3dIdx];
+
+  document.getElementById("hw3dTag").textContent=q.section;
+  document.getElementById("hw3dQText").innerHTML=q.q;
+
+  // Image display for img+mc questions
+  const imgWrap=document.getElementById("hw3dImgWrap");
+  const imgEl=document.getElementById("hw3dImg");
+  if(q.imgSrc){
+    imgEl.src=q.imgSrc;
+    imgEl.alt=q.section+" figure";
+    imgWrap.style.display="block";
+  } else {
+    imgWrap.style.display="none";
+    imgEl.src="";
+  }
+
+  // Build options (TF auto-uses True/False)
+  const wrap=document.getElementById("hw3dOpts"); wrap.innerHTML="";
+  const opts=(q.type==="tf")?["True","False"]:q.options;
+  const labels=["A","B","C","D"];
+  opts.forEach((opt,i)=>{
+    const btn=document.createElement("button");
+    btn.className="opt";
+    btn.innerHTML=`<span class="lbl">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick=()=>hw3dPick(i);
+    wrap.appendChild(btn);
+  });
+
+  // Trigger MathJax on question text and options
+  if(window.MathJax) MathJax.typesetPromise([document.getElementById("hw3dCard")]).catch(()=>{});
+
+  // Reset feedback
+  const fb=document.getElementById("hw3dFeedback");
+  fb.style.display="none"; fb.className="feedback";
+  document.getElementById("hw3dFbHead").textContent="";
+  document.getElementById("hw3dFbBody").innerHTML="";
+  document.getElementById("hw3dActRow").style.display="none";
+
+  // Progress bar & counter
+  document.getElementById("hw3dProgBar").style.width=(hw3dIdx/hw3dActive.length*100)+"%";
+  document.getElementById("hw3dCtr").textContent=`Question ${hw3dIdx+1} of ${hw3dActive.length}`;
+  document.getElementById("hw3dScoreBadge").textContent=`\u2713 ${hw3dKnew} \u00a0\u2717 ${hw3dDidnt}`;
+}
+
+function hw3dPick(chosen){
+  if(hw3dAnswered)return;
+  hw3dAnswered=true;
+  const q=hw3dActive[hw3dIdx];
+  const correct=q.correct;
+  const isRight=(chosen===correct);
+
+  document.querySelectorAll("#hw3dOpts .opt").forEach((btn,i)=>{
+    btn.classList.add("disabled");
+    if(i===correct) btn.classList.add("correct-reveal");
+    if(i===chosen && isRight)  btn.classList.add("correct-chosen");
+    if(i===chosen && !isRight) btn.classList.add("wrong-chosen");
+  });
+
+  const fb=document.getElementById("hw3dFeedback");
+  fb.style.display="block";
+  if(isRight){
+    fb.className="feedback correct";
+    document.getElementById("hw3dFbHead").textContent="\u2713 Correct!";
+  } else {
+    fb.className="feedback wrong";
+    const lbl=["A","B","C","D"][correct];
+    document.getElementById("hw3dFbHead").textContent=`\u2717 Incorrect \u2014 correct answer is ${lbl}`;
+  }
+  const fbBody=document.getElementById("hw3dFbBody");
+  fbBody.innerHTML=q.explain||"";
+  document.getElementById("hw3dActRow").style.display="flex";
+
+  // Re-render LaTeX in feedback after setting innerHTML
+  if(window.MathJax) MathJax.typesetPromise([fb]).catch(()=>{});
+}
+
+function hw3dMarkKnew(){
+  hw3dKnew++; hw3dIdx++;
+  document.getElementById("hw3dScoreBadge").textContent=`\u2713 ${hw3dKnew} \u00a0\u2717 ${hw3dDidnt}`;
+  hw3dRender();
+}
+function hw3dMarkDidnt(){
+  hw3dDidnt++; hw3dIdx++;
+  document.getElementById("hw3dScoreBadge").textContent=`\u2713 ${hw3dKnew} \u00a0\u2717 ${hw3dDidnt}`;
+  hw3dRender();
+}
+function hw3dNext(){if(!hw3dAnswered){hw3dIdx++;hw3dRender();}else{hw3dMarkDidnt();}}
+function hw3dPrev(){if(hw3dIdx>0){hw3dAnswered=false;hw3dIdx--;hw3dRender();}}
+
+function hw3dShowDone(){
+  document.getElementById("hw3Dosirrah").style.display="none";
+  const done=document.getElementById("hw3dDone");
+  done.style.display="flex";
+  const total=hw3dActive.length;
+  const pct=total?Math.round(hw3dKnew/total*100):0;
+  document.getElementById("hw3dRing").textContent=pct+"%";
+  const grade=pct>=80?"Excellent work, dosirrah! \uD83C\uDF93":pct>=60?"Good effort \u2014 keep reviewing! \uD83D\uDCDA":"Study the explanations and retry. \uD83D\uDCAA";
+  document.getElementById("hw3dDoneMsg").textContent=
+    `You got ${hw3dKnew} of ${total} correct on first try. ${grade}`;
+}
+
+function hw3dRestart(){
+  hw3dIdx=0; hw3dKnew=0; hw3dDidnt=0; hw3dAnswered=false;
+  document.getElementById("hw3dDone").style.display="none";
+  document.getElementById("hw3Dosirrah").style.display="flex";
+  hw3dRender();
 }
 </script>
 
