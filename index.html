@@ -2827,6 +2827,7 @@ function buildHome(){
       {icon:"🚀",title:"Study All Questions",desc:`All ${qs.length} questions`, action:()=>startQuiz("all")},
       {icon:"📖",title:"Study Notebook",    desc:"Review key concepts",         action:()=>showNotebook112()},
       {icon:"🎮",title:"Interactive Quiz 2",desc:"Game-style practice",         action:()=>showQuiz2()},
+      {icon:"✨",title:"Quiz V.2",          desc:"Exam 1 Practice · 42 Qs",     action:()=>showQuiz3()},
     ]
     :[
       {icon:"📚",title:"Quizzes",          desc:"Practice by topic",           action:()=>showQuizCategories()},
@@ -2955,7 +2956,7 @@ function showDone(){
     `You answered ${knew} of ${total} correctly on first try. ${pct>=80?"Excellent!":pct>=60?"Good — keep reviewing!":"Study the explanations and retry."}`;
 }
 function restartQ(){idx=0;knew=0;didnt=0;document.getElementById("done").style.display="none";document.getElementById("quiz").style.display="flex";render();}
-function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";document.getElementById("hw2Dosirrah").style.display="none";document.getElementById("hw2dDone").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
+function goHome(){document.getElementById("quiz").style.display="none";document.getElementById("done").style.display="none";document.getElementById("quiz2App").style.display="none";document.getElementById("quiz3App").style.display="none";document.getElementById("hw2Dosirrah").style.display="none";document.getElementById("hw2dDone").style.display="none";buildHome();document.getElementById("home").style.display="flex";}
 
 // ── NOTEBOOK ─────────────────────────────────────────────────────────────────
 function showNotebook(){
@@ -2994,6 +2995,7 @@ function showClassSelect(){
   document.getElementById("notebook").style.display="none";
   document.getElementById("notebook112").style.display="none";
   document.getElementById("quiz2App").style.display="none";
+  document.getElementById("quiz3App").style.display="none";
   document.getElementById("hw2Dosirrah").style.display="none";
   document.getElementById("hw2dDone").style.display="none";
   document.getElementById("classSelect").style.display="flex";
@@ -3104,6 +3106,8 @@ pre.q2-code{background:#0d1117;border:1px solid #3d4f8a;border-radius:10px;paddi
 .q2-nav-row{display:none;margin-top:18px;width:100%;max-width:820px;justify-content:center;padding:0 16px;}
 .q2-next-btn{background:linear-gradient(135deg,#5b6ef5,#7c3aed);color:#fff;border:none;border-radius:30px;padding:12px 36px;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .15s;}
 .q2-next-btn:hover{opacity:.85;}
+.q2-try-btn{background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:30px;padding:12px 28px;font-size:.95rem;font-weight:700;cursor:pointer;transition:border-color .15s,color .15s;}
+.q2-try-btn:hover{border-color:var(--accent);color:var(--accent);}
 
 /* Drag-drop matching */
 .q2-match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
@@ -3180,6 +3184,13 @@ pre.q2-code{background:#0d1117;border:1px solid #3d4f8a;border-radius:10px;paddi
   <div id="q2Results" style="display:none;"></div>
 </div>
 
+<!-- quiz3App div — Quiz V.2 -->
+<div id="quiz3App" style="display:none;flex-direction:column;align-items:center;min-height:100vh;background:var(--bg);padding:0 0 60px;">
+  <div id="q3Home"></div>
+  <div id="q3Question" style="display:none;flex-direction:column;align-items:center;width:100%;"></div>
+  <div id="q3Results" style="display:none;"></div>
+</div>
+
 <script>
 // ════════════════════════════════════════════════════════════════
 //  QUIZ 2 — CSCI 112 Java Interactive Engine
@@ -3198,6 +3209,7 @@ let q2ReviewMode=false;
 let q2Answered=false;
 let q2DragSrc=null;
 let q2OrderDragSrc=null;
+let q2IsRetry=false;
 
 // ── QUESTION BANK ────────────────────────────────────────────────
 const q2Bank=[
@@ -3543,7 +3555,7 @@ function q2StartSession(catId){
     [q2Questions[i],q2Questions[j]]=[q2Questions[j],q2Questions[i]];
   }
   q2Active=q2Questions;
-  q2Idx=0;q2Score=0;q2Streak=0;q2MaxStreak=0;q2Missed=[];q2Answered=false;
+  q2Idx=0;q2Score=0;q2Streak=0;q2MaxStreak=0;q2Missed=[];q2Answered=false;q2IsRetry=false;
   document.getElementById("q2Home").style.display="none";
   document.getElementById("q2Results").style.display="none";
   const qDiv=document.getElementById("q2Question");
@@ -3554,7 +3566,7 @@ function q2StartSession(catId){
 function q2StartReview(){
   if(!q2Missed.length){alert("No missed questions to review!");return;}
   q2Active=[...q2Missed];
-  q2Idx=0;q2Score=0;q2Streak=0;q2MaxStreak=0;q2Missed=[];q2Answered=false;
+  q2Idx=0;q2Score=0;q2Streak=0;q2MaxStreak=0;q2Missed=[];q2Answered=false;q2IsRetry=false;
   document.getElementById("q2Results").style.display="none";
   const qDiv=document.getElementById("q2Question");
   qDiv.style.display="flex";
@@ -3611,7 +3623,8 @@ function q2RenderQuestion(){
   const bodyHtml=renderFn(q);
 
   qDiv.innerHTML=headerHtml+counterHtml+bodyHtml+
-    `<div class="q2-nav-row" id="q2NavRow" style="display:none">
+    `<div class="q2-nav-row" id="q2NavRow" style="display:none;gap:10px">
+       <button class="q2-try-btn" onclick="q2TryAgain()">↺ Try Again</button>
        <button class="q2-next-btn" onclick="q2Next()">Next →</button>
      </div>`;
 }
@@ -3937,14 +3950,19 @@ function q2ShowFeedback(isCorrect,explanation){
 }
 
 function q2UpdateScore(isCorrect,q){
-  if(isCorrect){
-    q2Score++;
-    q2Streak++;
-    if(q2Streak>q2MaxStreak) q2MaxStreak=q2Streak;
-  } else {
-    q2Streak=0;
+  if(!q2IsRetry){
+    if(isCorrect){
+      q2Score++;
+      q2Streak++;
+      if(q2Streak>q2MaxStreak) q2MaxStreak=q2Streak;
+    } else {
+      q2Streak=0;
+      q2Missed.push(q);
+    }
+  } else if(!isCorrect){
     q2Missed.push(q);
   }
+  q2IsRetry=false;
   // Update header badges in real-time
   const sb=document.querySelector("#q2Question .q2-score-badge");
   if(sb) sb.innerHTML=`✓ ${q2Score} &nbsp;✗ ${q2Idx+1-q2Score}`;
@@ -3954,6 +3972,18 @@ function q2UpdateScore(isCorrect,q){
 
 function q2Next(){
   q2Idx++;
+  q2IsRetry=false;
+  q2MatchAssignments={};
+  q2OrderDragSrc=null;
+  q2RenderQuestion();
+}
+
+function q2TryAgain(){
+  const q=q2Active[q2Idx];
+  const mi=q2Missed.indexOf(q);
+  if(mi>-1) q2Missed.splice(mi,1);
+  q2Answered=false;
+  q2IsRetry=true;
   q2MatchAssignments={};
   q2OrderDragSrc=null;
   q2RenderQuestion();
@@ -4687,6 +4717,487 @@ function hw2dPlotLogLog(ctx,W,H){
   }
   drawSeries(pyPts,"#ef4444","Python loop",0);
   drawSeries(npPts,"#5b6ef5","NumPy",1);
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     QUIZ V.2 — CSCI 112 Exam 1 Practice · Chapters 6-9
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ════════════════════════════════════════════════════════════════
+//  QUIZ V.2 ENGINE
+// ════════════════════════════════════════════════════════════════
+
+// ── STATE ──────────────────────────────────────────────────────
+let q3Active=[],q3Idx=0,q3Score=0,q3Streak=0,q3MaxStreak=0,q3Missed=[],q3Answered=false,q3IsRetry=false,q3CurrentCat="all";
+
+// ── QUESTION BANK (42 questions) ───────────────────────────────
+const q3Bank=[
+
+// ─── SECTION 1: Object Classes & Methods ────────────────────
+{type:"mc",topic:"Object Classes",
+ q:"Which of the following is <strong>NOT</strong> one of the four method types found in a regular object class?",
+ options:["Constructor","Accessor (getter)","Static method","Mutator (setter)"],correct:2,
+ explain:"The four standard method types in a regular object class are: <strong>Constructor, Accessor (getter), Mutator (setter), and toString</strong>. Static methods are not part of the four required types."},
+
+{type:"mc",topic:"Object Classes",
+ q:"What is the return type of a constructor?",
+ options:["void","The class name","No return type is declared","int"],correct:2,
+ explain:"Constructors have <strong>no return type declaration at all</strong> — not even <code>void</code>. Writing <code>void MyClass()</code> makes it a regular method, not a constructor."},
+
+{type:"mc",topic:"Shadowing",
+ q:"What causes variable <strong>shadowing</strong> in Java?",
+ options:["Using the static keyword","A local variable or parameter has the same name as an instance variable","Using too many methods in a class","Returning a value from a method"],correct:1,
+ explain:"Shadowing occurs when a local variable or parameter shares the same name as an instance field. Inside that scope the name resolves to the local, hiding the field."},
+
+{type:"mc",topic:"Shadowing",
+ q:"Which is the best approach to prevent variable shadowing?",
+ options:["Use <code>this.</code> to refer to the field, OR rename the parameter so it differs","Use the <code>static</code> keyword","Make the method private","Add more constructors"],correct:0,
+ explain:"Two solutions: (1) prefix field access with <code>this.</code> — e.g., <code>this.name = name</code> — or (2) use a different name for the parameter so there is no conflict."},
+
+{type:"mc",topic:"Object Classes",
+ q:"What does the keyword <code>this</code> refer to inside a method?",
+ options:["The parent class","The current object instance","A static variable","The return value"],correct:1,
+ explain:"<code>this</code> is a reference to the current object instance — the object on which the method is being invoked. It is used to access instance fields when they might be shadowed by parameters."},
+
+{type:"mc",topic:"Aggregation",
+ q:"What is <strong>Aggregation</strong> in object-oriented programming?",
+ options:["Inheriting fields from a parent class","A 'has-a' relationship where one class contains a reference to another class as a field","Two classes sharing the same method name","Combining two arrays into one"],correct:1,
+ explain:"Aggregation is a <strong>Has-A</strong> relationship: one class holds a reference to another class as a field. Example: a <code>Library</code> class that has a <code>Book[]</code> field. Distinct from inheritance (Is-A)."},
+
+{type:"mc",topic:"Aggregation",
+ q:"What is the relationship between classes in Aggregation called?",
+ options:["Inheritance","Polymorphism","Has-A relationship","Is-A relationship"],correct:2,
+ explain:"Aggregation uses the <strong>Has-A</strong> relationship. A Library <em>has</em> Books. Compare with inheritance which is an Is-A relationship (e.g., a Dog IS-A Animal)."},
+
+// ─── SECTION 2: Return Types, Overloading & toString ─────────
+{type:"mc",topic:"Methods & Return Types",
+ q:"Which keyword is used to send a value back from a method to the caller?",
+ options:["send","output","return","yield"],correct:2,
+ explain:"<code>return</code> is the Java keyword that exits a method and sends a value back to the caller. The returned type must match the method's declared return type."},
+
+{type:"mc",topic:"Overloading",
+ q:"What does it mean to 'overload' a method?",
+ options:["Call a method more than once","Define multiple methods with the same name but different parameter lists","Use more than one return statement","Override a method from a parent class"],correct:1,
+ explain:"Overloading = same method name, different parameter lists (type, count, or order). The return type alone does <strong>not</strong> distinguish overloads. Overriding is a different concept used with inheritance."},
+
+{type:"mc",topic:"toString",
+ q:"What must a <code>toString()</code> method always return?",
+ options:["void","int","String","boolean"],correct:2,
+ explain:"<code>toString()</code> must always return a <strong>String</strong>. Full signature: <code>public String toString()</code>. Java calls this automatically when you print an object or concatenate it with a String."},
+
+{type:"mc",topic:"Overloading",
+ q:"Which method signature is a valid overload of: <code>public int add(int a, int b)</code>?",
+ options:["<code>public int add(int a, int b) { }</code>","<code>public double add(double a, double b) { }</code>","<code>private int add(int a, int b) { }</code>","<code>public void add(int a, int b) { }</code>"],correct:1,
+ explain:"A valid overload must differ in <strong>parameter types, count, or order</strong>. Option B uses (double, double) instead of (int, int) — valid overload. A and C have identical parameter lists. Changing only access modifier or return type is not overloading."},
+
+{type:"mc",topic:"toString",
+ q:"A <code>Car</code> class has <code>String make</code> and <code>int year</code> fields. What does a correct <code>toString()</code> return for make=Toyota, year=2020?",
+ options:['"Toyota, 2020"','"Car{make=\'Toyota\', year=2020}"','"Car: Toyota 2020"','"make=Toyota year=2020"'],correct:1,
+ explain:'Standard pattern: <code>return "Car{make=\'" + make + "\', year=" + year + "}";</code> produces <code>Car{make=\'Toyota\', year=2020}</code>.'},
+
+// ─── SECTION 3: JUnit & Concatenation ────────────────────────
+{type:"mc",topic:"JUnit Testing",
+ q:"Which JUnit assert checks that two values are <strong>equal</strong>?",
+ options:["assertTrue()","assertSame()","assertEquals()","assertNotNull()"],correct:2,
+ explain:"<code>assertEquals(expected, actual)</code> checks value equality. <code>assertSame()</code> checks reference equality. <code>assertTrue()</code> tests a boolean. <code>assertNotNull()</code> verifies a value is not null."},
+
+{type:"mc",topic:"Concatenation",
+ q:"What does <strong>concatenation</strong> mean in Java?",
+ options:["Splitting a String into parts","Joining two or more Strings together using the + operator","Converting a number to a String","Comparing two Strings"],correct:1,
+ explain:"Concatenation is joining Strings using the <code>+</code> operator. When <code>+</code> is used with a String and a non-String, the non-String is converted to its String representation first."},
+
+{type:"mc",topic:"Concatenation",
+ q:'What is the output of: <code>System.out.println("Score: " + 5 + 3);</code>',
+ options:["Score: 8","Score: 53","Score: 5 + 3","Compilation error"],correct:1,
+ explain:'Java evaluates left-to-right. <code>"Score: " + 5</code> = <code>"Score: 5"</code> (String concat), then <code>"Score: 5" + 3</code> = <code>"Score: 53"</code>. To add numerically: <code>"Score: " + (5 + 3)</code>.'},
+
+{type:"mc",topic:"JUnit Testing",
+ q:"Which assert would you use to verify that a value is <strong>NOT null</strong>?",
+ options:["assertFalse()","assertEquals()","assertNotNull()","assertNull()"],correct:2,
+ explain:"<code>assertNotNull(value)</code> passes when the value is not null. <code>assertNull(value)</code> passes when it IS null. Don't confuse them — the <em>Not</em> prefix matters!"},
+
+// ─── SECTION 4: Decimal Formatting ───────────────────────────
+{type:"mc",topic:"Decimal Formatting",
+ q:"Which approach(es) can format a number to 2 decimal places in Java?",
+ options:["Only DecimalFormat","Only printf","Only String.format","All three: DecimalFormat, printf, and String.format"],correct:3,
+ explain:"All three work: <code>new DecimalFormat(\"#.##\").format(n)</code>, <code>printf(\"%.2f\", n)</code>, and <code>String.format(\"%.2f\", n)</code>. Each has its use case — DecimalFormat for localized output, printf for direct printing, String.format for building Strings."},
+
+{type:"mc",topic:"Decimal Formatting",
+ q:"What does the <code>-</code> flag do in printf / String.format?",
+ options:["Makes the number negative","Left-justifies the output within the field width","Adds a minus sign always","Removes decimal places"],correct:1,
+ explain:"The <code>-</code> flag <strong>left-justifies</strong> within the field width (padding goes on the right). Without it, output is right-justified by default. Example: <code>printf(\"%-10.2f\", 3.5)</code> → <code>\"3.50&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"</code>."},
+
+{type:"mc",topic:"Decimal Formatting",
+ q:'What is the output of: <code>System.out.printf("%8.2f", 3.5);</code>',
+ options:['"    3.50" — right-aligned in field of width 8','"3.50    " — left-aligned','"3.5"','"00003.50"'],correct:0,
+ explain:'<code>%8.2f</code> = field width 8, 2 decimal places, right-aligned (default). 3.5 becomes "3.50" (4 chars), padded with 4 spaces on the left → <code>"    3.50"</code>.'},
+
+{type:"mc",topic:"Decimal Formatting",
+ q:"Which line correctly formats 1234.5678 to <strong>3 decimal places</strong> with a total field width of 10?",
+ options:['<code>String.format("%10.3f", 1234.5678)</code>','<code>String.format("%.3f", 1234.5678)</code>','<code>String.format("%3.10f", 1234.5678)</code>','<code>String.format("%10.3d", 1234.5678)</code>'],correct:0,
+ explain:'<code>"%10.3f"</code>: field width 10, 3 decimal places, float. Width comes <em>before</em> the dot; precision comes after. <code>d</code> is for integers — using it with a double causes a runtime error.'},
+
+// ─── SECTION 5: static Keyword ───────────────────────────────
+{type:"mc",topic:"static Keyword",
+ q:"How many memory locations are created for a <code>static</code> variable, regardless of how many objects exist?",
+ options:["One per object","One per method call","Only one — shared by all instances","Zero — static variables are not stored"],correct:2,
+ explain:"A <code>static</code> variable is class-level: <strong>only ONE copy</strong> exists in memory, shared across all instances. Unlike instance fields, static fields do not get a new copy for each object."},
+
+{type:"mc",topic:"static Keyword",
+ q:"When should you use the <code>static</code> keyword for a field?",
+ options:["When each object needs its own copy","When you want the variable shared across all instances of the class","When the variable needs to be private","When the variable is a String"],correct:1,
+ explain:"Use <code>static</code> for <strong>shared state</strong> — e.g., a counter tracking how many objects have been created. All instances increment the same static counter. Do NOT use static for object-specific data like name or age."},
+
+{type:"mc",topic:"static Keyword",
+ q:"Which of the following is a <strong>valid</strong> call to a static method <code>getCount()</code> in class <code>Dog</code>?",
+ options:["<code>Dog d = new Dog(); d.getCount();</code>","<code>Dog.getCount();</code>","<code>static.getCount();</code>","Both A and B are valid"],correct:3,
+ explain:"Static methods can be called on the class (<code>Dog.getCount()</code> — preferred) or on an instance (<code>d.getCount()</code> — works but discouraged). <code>static.getCount()</code> is not valid Java syntax."},
+
+// ─── SECTION 6: Arrays ───────────────────────────────────────
+{type:"mc",topic:"Arrays",
+ q:"How do you correctly instantiate an integer array of size 5 in Java?",
+ options:["<code>int array = new int[5];</code>","<code>int[] array = new int[5];</code>","<code>int[] array = int[5];</code>","<code>array int[5];</code>"],correct:1,
+ explain:"Correct syntax: <code>int[] array = new int[5];</code> The <code>[]</code> declares an array-type reference, and <code>new int[5]</code> allocates 5 integer slots on the heap. Each slot defaults to 0."},
+
+{type:"mc",topic:"Arrays",
+ q:"What is the difference between <strong>logical length</strong> and <strong>physical length</strong> of an array?",
+ options:["They are always the same","Physical length is the total capacity; logical length is the count of actually inserted elements","Logical length is always larger","Physical length changes at runtime"],correct:1,
+ explain:"<strong>Physical length</strong> (<code>array.length</code>) is fixed at creation — the total capacity. <strong>Logical length</strong> is tracked with a separate counter variable (e.g., <code>count</code>) representing how many valid elements have been added."},
+
+{type:"mc",topic:"Arrays",
+ q:'What is the output of this code?<pre style="text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem;overflow-x:auto">int[] nums = {10, 20, 30, 40, 50};\nfor (int i = 0; i &lt; nums.length; i++) {\n    System.out.print(nums[i] + " ");\n}</pre>',
+ options:["10 20 30 40 50 ","50 40 30 20 10 ","10 20 30 40 ","ArrayIndexOutOfBoundsException"],correct:0,
+ explain:"The loop runs from i=0 to i=4 (<code>nums.length=5</code>), printing each element followed by a space. Result: <code>10 20 30 40 50 </code> (with trailing space)."},
+
+{type:"mc",topic:"Arrays",
+ q:"In an Intermediate Object class, which correctly adds a <code>Student</code> object <code>st</code> to array <code>roster</code> at the next available index (tracked by <code>count</code>)?",
+ options:["<code>roster[count] = st; count++;</code>","<code>roster.add(st);</code>","<code>roster[count++] = st;</code>","Both A and C are correct"],correct:3,
+ explain:"A: stores <code>st</code> at <code>roster[count]</code>, then increments (two statements). C: post-increment stores at current <code>count</code> THEN increments (one statement). Both produce identical results. B is ArrayList syntax, not array syntax."},
+
+{type:"mc",topic:"Nested Loops",
+ q:"What does a <strong>nested for loop</strong> mean?",
+ options:["Two for loops running simultaneously on different threads","A for loop inside another for loop","A for loop that calls itself recursively","A loop with two boolean conditions"],correct:1,
+ explain:"A nested loop is simply a loop inside another loop. For each single iteration of the outer loop, the inner loop runs completely from start to finish. Used for 2D patterns, grids, and multi-dimensional data."},
+
+{type:"mc",topic:"Nested Loops",
+ q:'What is the output of this nested loop?<pre style="text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem;overflow-x:auto">for (int i = 1; i &lt;= 3; i++) {\n    for (int j = 1; j &lt;= 2; j++) {\n        System.out.print(i + "" + j + "  ");\n    }\n}</pre>',
+ options:["11&nbsp;&nbsp;12&nbsp;&nbsp;21&nbsp;&nbsp;22&nbsp;&nbsp;31&nbsp;&nbsp;32&nbsp;&nbsp;","11&nbsp;&nbsp;21&nbsp;&nbsp;31&nbsp;&nbsp;12&nbsp;&nbsp;22&nbsp;&nbsp;32&nbsp;&nbsp;","12&nbsp;&nbsp;22&nbsp;&nbsp;32&nbsp;&nbsp;","11&nbsp;&nbsp;12&nbsp;&nbsp;13&nbsp;&nbsp;21&nbsp;&nbsp;22&nbsp;&nbsp;23&nbsp;&nbsp;"],correct:0,
+ explain:"For i=1: j=1→'11', j=2→'12'. For i=2: j=1→'21', j=2→'22'. For i=3: j=1→'31', j=2→'32'. Final output: <code>11  12  21  22  31  32</code>."},
+
+// ─── SECTION 7: Wrapper Classes ──────────────────────────────
+{type:"mc",topic:"Wrapper Classes",
+ q:"What is the purpose of <strong>wrapper classes</strong> in Java?",
+ options:["To make primitive types behave like objects","To encrypt data","To create arrays of any size","To override toString automatically"],correct:0,
+ explain:"Wrapper classes (<code>Integer</code>, <code>Double</code>, <code>Character</code>, <code>Boolean</code>, etc.) wrap primitive types in objects. This is required for use with <code>ArrayList</code> and other generic collections, which cannot store primitive types directly."},
+
+{type:"mc",topic:"Wrapper Classes",
+ q:"Which wrapper class corresponds to the primitive type <code>int</code>?",
+ options:["Int","INTEGER","Integer","Wrapper&lt;int&gt;"],correct:2,
+ explain:"<code>Integer</code> (capital I) is the wrapper for <code>int</code>. Pattern: int→Integer, double→Double, char→Character, boolean→Boolean, long→Long. Java is case-sensitive."},
+
+{type:"mc",topic:"Wrapper Classes",
+ q:"Which method converts a <code>String</code> to an <code>int</code> in Java?",
+ options:["Integer.parseString()","Integer.parseInt()","String.toInt()","Integer.fromString()"],correct:1,
+ explain:"<code>Integer.parseInt(str)</code> converts a String like <code>\"42\"</code> to the int value <code>42</code>. Parallel methods: <code>Double.parseDouble()</code>, <code>Boolean.parseBoolean()</code>. A non-numeric String causes a <code>NumberFormatException</code>."},
+
+// ─── CODE WRITING PRACTICE (10) ──────────────────────────────
+{type:"fix",topic:"Code: Fix the Bug",
+ q:"Fix the <strong>shadowing bug</strong> in this constructor so the fields are correctly assigned:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">public class Dog {\n    private String name;\n    private int age;\n    public Dog(String name, int age) {\n        name = name;   // Bug\n        age = age;     // Bug\n    }\n}</pre>Type the two corrected assignment lines.",
+ answer:["this.name = name; this.age = age;","this.name=name;this.age=age;","this.name = name;\n        this.age = age;","this.name=name;\n        this.age=age;"],
+ explain:"<code>name = name</code> assigns the parameter to itself — the field never changes. Fix: use <code>this.</code> to explicitly target the instance fields: <code>this.name = name; this.age = age;</code>"},
+
+{type:"fitb",topic:"Code: Fill in the Blank",
+ q:"Complete the getter method for the field <code>private double price;</code><pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">public ______ getPrice() {\n    return price;\n}</pre>Type the return type.",
+ answer:["double","Double"],
+ explain:"A getter's return type must match the field's type exactly. Since the field is <code>double price</code>, the getter must return <code>double</code>. Capital <code>Double</code> would be the wrapper class."},
+
+{type:"fix",topic:"Code: Fix the Bug",
+ q:"Fix the field declaration so <strong>all</strong> <code>Dog</code> instances share the same counter:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">public class Dog {\n    int dogCount = 0;  // Should be shared by ALL instances\n    public Dog() { dogCount++; }\n}</pre>Type the corrected field declaration line.",
+ answer:["static int dogCount = 0;","private static int dogCount = 0;","static int dogCount=0;","private static int dogCount=0;"],
+ explain:"Without <code>static</code>, each Dog object gets its own copy of <code>dogCount</code>. Adding <code>static</code> makes it class-level: one copy shared by all instances so every constructor call increments the same counter."},
+
+{type:"fitb",topic:"Code: Fill in the Blank",
+ q:"Fill in both ArrayList methods — one to add an element and one to retrieve by index:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();\nlist.____(\"Java\");\nString first = list.____(0);</pre>Type both method names separated by a comma (e.g.: add, get)",
+ answer:["add, get","add,get","add , get"],
+ explain:"<code>list.add(element)</code> appends to the list. <code>list.get(index)</code> retrieves by index (0-based). Unlike arrays, ArrayList requires these methods — you cannot use bracket notation <code>list[0]</code>."},
+
+{type:"fix",topic:"Code: Fix the Bug",
+ q:"Fix the <strong>array declaration</strong> syntax error:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">int array = new int[10];  // Bug — wrong type</pre>Type the corrected line.",
+ answer:["int[] array = new int[10];","int []array = new int[10];","int[] array=new int[10];"],
+ explain:"The variable type must be <code>int[]</code> (array of int), not <code>int</code> (single integer). Standard Java style places the brackets with the type: <code>int[] array = new int[10];</code>"},
+
+{type:"fitb",topic:"Code: Fill in the Blank",
+ q:"Complete the <code>toString()</code> for a <code>Book</code> class with fields <code>String title</code> and <code>int pages</code>:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">public String toString() {\n    return \"Book{title='\" + ______ + \"', pages=\" + ______ + \"}\";\n}</pre>Type both field names separated by a comma (e.g.: title, pages)",
+ answer:["title, pages","title,pages","title , pages"],
+ explain:"Inside <code>toString()</code> you reference instance fields directly by name. Concatenate <code>title</code> (String) and <code>pages</code> (int) into the returned String — the <code>+</code> operator converts the int to String automatically."},
+
+{type:"fix",topic:"Code: Fix the Bug",
+ q:"Fix the <code>printf</code> format so the number is <strong>right-aligned</strong> (not left) in a field of width 8 with 2 decimal places:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">System.out.printf(\"%-8.2f\", 3.14);  // Currently left-aligned</pre>Type the corrected printf call.",
+ answer:["System.out.printf(\"%8.2f\", 3.14);","System.out.printf(\"%8.2f\",3.14);","printf(\"%8.2f\", 3.14);","System.out.printf(\"%8.2f\", 3.14)"],
+ explain:"The <code>-</code> flag causes left-alignment. Removing it gives right-alignment (the default). <code>%8.2f</code> = field width 8, 2 decimal places, right-aligned → <code>&nbsp;&nbsp;&nbsp;&nbsp;3.14</code>."},
+
+{type:"fitb",topic:"Code: Fill in the Blank",
+ q:"Fill in the wrapper method to parse a String to a <code>double</code>:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">String s = \"3.14\";\ndouble d = Double.______(s);</pre>",
+ answer:["parseDouble","ParseDouble"],
+ explain:"<code>Double.parseDouble(str)</code> converts a String like <code>\"3.14\"</code> to the double value <code>3.14</code>. Pattern: <code>WrapperClass.parseType(str)</code> — e.g., <code>Integer.parseInt()</code>, <code>Long.parseLong()</code>."},
+
+{type:"fix",topic:"Code: Fix the Bug",
+ q:"Fix this call to <code>Integer.parseInt()</code> — it is passing the wrong argument type:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">int x = Integer.parseInt(42);  // Bug: 42 is an int, not a String</pre>Type the corrected line.",
+ answer:["int x = Integer.parseInt(\"42\");","int x=Integer.parseInt(\"42\");","int x = 42;"],
+ explain:"<code>Integer.parseInt()</code> expects a <strong>String</strong> argument. Passing an <code>int</code> literal causes a compile error. Fix: pass a String literal <code>\"42\"</code>. Or, since 42 is already an int, simply write <code>int x = 42;</code>."},
+
+{type:"fitb",topic:"Code: Fill in the Blank",
+ q:"Complete the loop condition to print <strong>only</strong> the elements actually stored (logical size tracked by <code>count</code>), not the empty slots:<pre style=\"text-align:left;margin:8px 0;background:#0d1117;border:1px solid #3d4f8a;border-radius:8px;padding:12px;font-size:.83rem\">String[] names = new String[50];\nint count = 5;  // 5 names have been added\nfor (int i = 0; i &lt; ______; i++) {\n    System.out.println(names[i]);\n}</pre>",
+ answer:["count","Count"],
+ explain:"Use <code>count</code> (logical length), <strong>not</strong> <code>names.length</code> (physical length = 50). Using <code>names.length</code> would print all 50 slots including <code>null</code> values. <code>count</code> tracks how many elements were actually inserted."},
+
+]; // end q3Bank
+
+// ── CATEGORIES ────────────────────────────────────────────────
+const q3Categories=[
+  {id:"all",  label:"All Questions (42)", icon:"🎯",  filter:q=>true},
+  {id:"theory",label:"Theory & Concepts", icon:"📖", filter:q=>q.type==="mc"},
+  {id:"code",  label:"Code Writing",       icon:"💻", filter:q=>q.type!=="mc"},
+];
+const q3TypeLabel={mc:"Multiple Choice",fix:"Fix the Bug",fitb:"Fill in the Blank"};
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function showQuiz3(){
+  ["home","quiz","done","notebook","notebook112","classSelect","quiz2App"].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display="none";
+  });
+  const app=document.getElementById("quiz3App");
+  app.style.display="flex";
+  document.getElementById("q3Question").style.display="none";
+  document.getElementById("q3Results").style.display="none";
+  document.getElementById("q3Home").style.display="block";
+  q3BuildHome();
+}
+
+function q3GoHome(){
+  document.getElementById("q3Question").style.display="none";
+  document.getElementById("q3Results").style.display="none";
+  document.getElementById("q3Home").style.display="block";
+  q3BuildHome();
+}
+
+function q3BackToMainHome(){
+  document.getElementById("quiz3App").style.display="none";
+  buildHome();
+  document.getElementById("home").style.display="flex";
+}
+
+function q3StartSession(catId){
+  const cat=q3Categories.find(c=>c.id===catId)||q3Categories[0];
+  q3Active=q3Bank.filter(cat.filter).map(q=>({...q}));
+  for(let i=q3Active.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [q3Active[i],q3Active[j]]=[q3Active[j],q3Active[i]];
+  }
+  q3Idx=0;q3Score=0;q3Streak=0;q3MaxStreak=0;q3Missed=[];q3Answered=false;q3IsRetry=false;
+  q3CurrentCat=catId;
+  document.getElementById("q3Home").style.display="none";
+  document.getElementById("q3Results").style.display="none";
+  document.getElementById("q3Question").style.display="flex";
+  q3RenderQuestion();
+}
+
+function q3StartReview(){
+  if(!q3Missed.length){alert("No missed questions to review!");return;}
+  q3Active=[...q3Missed];
+  q3Idx=0;q3Score=0;q3Streak=0;q3MaxStreak=0;q3Missed=[];q3Answered=false;q3IsRetry=false;
+  document.getElementById("q3Results").style.display="none";
+  document.getElementById("q3Question").style.display="flex";
+  q3RenderQuestion();
+}
+
+// ── HOME BUILDER ───────────────────────────────────────────────
+function q3BuildHome(){
+  const wrap=document.getElementById("q3Home");
+  let html=`<div class="q2-home-wrap">
+    <h1 style="background:linear-gradient(135deg,#5b6ef5,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Quiz V.2 ✨</h1>
+    <p class="q2-sub">CS 112 — Exam 1 Practice · Chapters 6, 7, 8 &amp; 9 · ${q3Bank.length} Questions</p>
+    <div class="q2-home-grid">`;
+  q3Categories.forEach(cat=>{
+    const cnt=q3Bank.filter(cat.filter).length;
+    html+=`<div class="q2-cat-card" onclick="q3StartSession('${cat.id}')">
+      <span class="q2-pill">${cnt}</span>
+      <h3>${cat.icon} ${cat.label}</h3>
+      <p class="q2-cnt">${cnt} questions</p>
+    </div>`;
+  });
+  html+=`</div>
+    <button class="q2-home-back" onclick="q3BackToMainHome()">← Back to CSCI 112 Home</button>
+  </div>`;
+  wrap.innerHTML=html;
+}
+
+// ── RENDER QUESTION ────────────────────────────────────────────
+function q3RenderQuestion(){
+  if(q3Idx>=q3Active.length){q3ShowResults();return;}
+  q3Answered=false;
+  const q=q3Active[q3Idx];
+  const pct=(q3Idx/q3Active.length*100).toFixed(1);
+  const qDiv=document.getElementById("q3Question");
+
+  const header=`<div class="q2-header">
+    <button class="q2-back" onclick="q3GoHome()">← Home</button>
+    <div class="q2-prog-wrap"><div class="q2-prog-bar" style="width:${pct}%;background:linear-gradient(90deg,#5b6ef5,#a78bfa)"></div></div>
+    <span class="q2-score-badge">✓ ${q3Score} &nbsp;✗ ${q3Idx-q3Score}</span>
+    <span class="streak">🔥 ${q3Streak}</span>
+  </div>`;
+
+  const counter=`<div style="width:100%;max-width:820px;padding:0 16px;color:var(--muted);font-size:.82rem;margin-bottom:8px;">
+    Question ${q3Idx+1} of ${q3Active.length}
+  </div>`;
+
+  const body=q.type==="mc"?q3RenderMC(q):q3RenderCode(q);
+
+  qDiv.innerHTML=header+counter+body+
+    `<div class="q2-nav-row" id="q3NavRow" style="display:none;gap:10px">
+       <button class="q2-try-btn" onclick="q3TryAgain()">↺ Try Again</button>
+       <button class="q2-next-btn" onclick="q3Next()">Next →</button>
+     </div>`;
+}
+
+function q3CardWrap(q,inner){
+  return `<div class="q2-card" id="q3ActiveCard">
+    <div>
+      <span class="q2-type-badge">${q3TypeLabel[q.type]||q.type}</span>
+      <span class="q2-topic-badge">${q.topic}</span>
+    </div>
+    <div class="q2-question">${q.q}</div>
+    ${inner}
+    <div class="q2-feedback" id="q3Feedback"></div>
+  </div>`;
+}
+
+// ── MC ─────────────────────────────────────────────────────────
+function q3RenderMC(q){
+  const labels=["A","B","C","D"];
+  let opts="";
+  q.options.forEach((opt,i)=>{
+    opts+=`<button class="q2-opt-btn" id="q3opt${i}" onclick="q3PickMC(${i})">
+      <span class="q2-opt-lbl">${labels[i]}</span><span>${opt}</span>
+    </button>`;
+  });
+  return q3CardWrap(q,`<div class="q2-mc-opts">${opts}</div>`);
+}
+
+function q3PickMC(chosen){
+  if(q3Answered)return;
+  q3Answered=true;
+  const q=q3Active[q3Idx];
+  const ok=chosen===q.correct;
+  document.querySelectorAll(".q2-opt-btn").forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===q.correct) btn.classList.add("q2-correct");
+    if(i===chosen&&!ok) btn.classList.add("q2-wrong");
+  });
+  q3ShowFeedback(ok,q.explain);
+  q3UpdateScore(ok,q);
+}
+
+// ── CODE (FIX / FITB) ──────────────────────────────────────────
+function q3RenderCode(q){
+  const isFixType=q.type==="fix";
+  const inner=isFixType
+    ?`<textarea class="q2-textarea" id="q3CodeInput" placeholder="Write the corrected code here..."></textarea>
+      <button class="q2-submit-btn" onclick="q3SubmitCode()">Submit</button>`
+    :`<input class="q2-input" id="q3CodeInput" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')q3SubmitCode()">
+      <button class="q2-submit-btn" onclick="q3SubmitCode()">Check Answer</button>`;
+  return q3CardWrap(q,inner);
+}
+
+function q3SubmitCode(){
+  if(q3Answered)return;
+  const inp=document.getElementById("q3CodeInput");
+  if(!inp)return;
+  const val=inp.value.trim();
+  if(!val)return;
+  q3Answered=true;
+  inp.disabled=true;
+  const q=q3Active[q3Idx];
+  const accepted=Array.isArray(q.answer)?q.answer:[q.answer];
+  const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+  const isCorrect=accepted.some(a=>norm(val)===norm(a)||norm(val).includes(norm(a)));
+  inp.style.borderColor=isCorrect?"var(--green)":"var(--red)";
+  q3ShowFeedback(isCorrect,q.explain);
+  q3UpdateScore(isCorrect,q);
+}
+
+// ── FEEDBACK & SCORING ─────────────────────────────────────────
+function q3ShowFeedback(ok,exp){
+  const fb=document.getElementById("q3Feedback");
+  if(!fb)return;
+  fb.className="q2-feedback "+(ok?"q2-fb-correct":"q2-fb-wrong");
+  fb.style.display="block";
+  fb.innerHTML=`<div class="q2-fb-head">${ok?"✓ Correct!":"✗ Not quite — here's why:"}</div><div>${exp||""}</div>`;
+  const nav=document.getElementById("q3NavRow");
+  if(nav) nav.style.display="flex";
+}
+
+function q3UpdateScore(ok,q){
+  if(!q3IsRetry){
+    if(ok){q3Score++;q3Streak++;if(q3Streak>q3MaxStreak)q3MaxStreak=q3Streak;}
+    else{q3Streak=0;q3Missed.push(q);}
+  } else if(!ok){q3Missed.push(q);}
+  q3IsRetry=false;
+  const sb=document.querySelector("#q3Question .q2-score-badge");
+  if(sb) sb.innerHTML=`✓ ${q3Score} &nbsp;✗ ${q3Idx+1-q3Score}`;
+  const st=document.querySelector("#q3Question .streak");
+  if(st) st.textContent=`🔥 ${q3Streak}`;
+}
+
+function q3Next(){
+  q3Idx++;q3IsRetry=false;q3RenderQuestion();
+}
+
+function q3TryAgain(){
+  const q=q3Active[q3Idx];
+  const mi=q3Missed.indexOf(q);
+  if(mi>-1) q3Missed.splice(mi,1);
+  q3Answered=false;q3IsRetry=true;
+  q3RenderQuestion();
+}
+
+// ── RESULTS ────────────────────────────────────────────────────
+function q3ShowResults(){
+  document.getElementById("q3Question").style.display="none";
+  const res=document.getElementById("q3Results");
+  res.style.display="block";
+  const total=q3Active.length;
+  const pct=total?Math.round(100*q3Score/total):0;
+  const grade=pct>=90?"Excellent! 🏆":pct>=75?"Great job! 👍":pct>=60?"Good effort — keep reviewing! 📚":"Study the explanations and retry. 💪";
+  let missedHtml="";
+  if(q3Missed.length){
+    missedHtml=`<div class="q2-missed-section">
+      <h3>Missed Questions (${q3Missed.length})</h3>
+      ${q3Missed.map(q=>`<div class="q2-missed-item">
+        <div class="q2-missed-q"><strong>[${(q3TypeLabel[q.type]||q.type).toUpperCase()}]</strong> ${q.q}</div>
+        <div class="q2-missed-ans">${q.explain||""}</div>
+      </div>`).join("")}
+    </div>`;
+  }
+  res.innerHTML=`<div class="q2-results-wrap">
+    <div class="q2-results-ring" style="border-color:#5b6ef5;color:#5b6ef5">${pct}%</div>
+    <h2>Round Complete!</h2>
+    <p>${grade}</p>
+    <div class="q2-results-stats">
+      <div class="q2-stat-box"><div class="q2-stat-val" style="color:var(--green)">${q3Score}</div><div class="q2-stat-lbl">Correct</div></div>
+      <div class="q2-stat-box"><div class="q2-stat-val" style="color:var(--red)">${total-q3Score}</div><div class="q2-stat-lbl">Missed</div></div>
+      <div class="q2-stat-box"><div class="q2-stat-val" style="color:var(--yellow)">${q3MaxStreak}</div><div class="q2-stat-lbl">Max Streak 🔥</div></div>
+      <div class="q2-stat-box"><div class="q2-stat-val">${total}</div><div class="q2-stat-lbl">Total</div></div>
+    </div>
+    <div class="q2-results-btns">
+      <button class="q2-next-btn" onclick="q3StartSession('${q3CurrentCat}')">Retry 🔄</button>
+      ${q3Missed.length?`<button class="q2-submit-btn" onclick="q3StartReview()">Review Missed (${q3Missed.length})</button>`:""}
+      <button class="q2-match-check-btn" onclick="q3GoHome()">← Quiz Home</button>
+      <button class="q2-match-check-btn" onclick="q3BackToMainHome()">← CSCI 112 Home</button>
+    </div>
+    ${missedHtml}
+  </div>`;
 }
 </script>
 
