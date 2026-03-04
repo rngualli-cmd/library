@@ -1044,6 +1044,7 @@ df = spark.read.csv("/path/file.csv", header=True, inferSchema=True)</pre>
       <button class="nb-item" data-nb112="java-pvr"       onclick="nbShow112('java-pvr')">Primitives vs Objects</button>
       <button class="nb-item" data-nb112="java-random"    onclick="nbShow112('java-random')">Random &amp; Nested Loops</button>
       <button class="nb-item" data-nb112="java-junit"     onclick="nbShow112('java-junit')">JUnit Testing</button>
+      <button class="nb-item" data-nb112="java-quickref"  onclick="nbShow112('java-quickref')">⚡ Quick Reference</button>
     </nav>
     <div class="nb-content">
 
@@ -1363,6 +1364,320 @@ public class PersonTest {
         <div class="nb-tip">Always test getters right after construction. Test setters by setting a value then getting it back. Test toString for expected string output.</div>
         <div class="nb-warn">Each test method must be annotated with <code>@Test</code>. If an assertion fails, the test immediately stops and reports failure. One assert per test is a good practice.</div>
       </div>
+
+      <!-- ═══ QUICK REFERENCE ═══ -->
+      <div class="nb-section" id="nb112-java-quickref">
+        <h2>⚡ Quick Reference</h2>
+        <p class="nb-sub">Every term from class — one simple table each. No fluff.</p>
+
+        <!-- ── KEYWORDS ── -->
+        <h3>Keywords — what each word does</h3>
+        <table class="nb-table">
+          <tr><th>Keyword</th><th>What it means</th><th>Example</th></tr>
+          <tr><td><code>public</code></td><td>Anyone can use this</td><td><code>public void sayHi()</code></td></tr>
+          <tr><td><code>private</code></td><td>Only this class can use it</td><td><code>private int age;</code></td></tr>
+          <tr><td><code>void</code></td><td>Method returns nothing</td><td><code>public void setAge(int a)</code></td></tr>
+          <tr><td><code>return</code></td><td>Send a value back to the caller</td><td><code>return name;</code></td></tr>
+          <tr><td><code>new</code></td><td>Create an object in memory</td><td><code>Dog d = new Dog();</code></td></tr>
+          <tr><td><code>this</code></td><td>The current object (refers to its own fields)</td><td><code>this.name = name;</code></td></tr>
+          <tr><td><code>static</code></td><td>Belongs to the class, not each object — one shared copy</td><td><code>static int count;</code></td></tr>
+          <tr><td><code>final</code></td><td>Value can never change (constant)</td><td><code>static final double TAX = 0.07;</code></td></tr>
+          <tr><td><code>int</code></td><td>Whole number: …-2, -1, 0, 1, 2…</td><td><code>int score = 95;</code></td></tr>
+          <tr><td><code>double</code></td><td>Decimal number</td><td><code>double price = 3.99;</code></td></tr>
+          <tr><td><code>boolean</code></td><td>true or false only</td><td><code>boolean isOn = true;</code></td></tr>
+          <tr><td><code>char</code></td><td>A single character</td><td><code>char grade = 'A';</code></td></tr>
+          <tr><td><code>String</code></td><td>Text (sequence of characters) — it's an object</td><td><code>String name = "Ana";</code></td></tr>
+          <tr><td><code>import</code></td><td>Bring in a class from a library</td><td><code>import java.util.ArrayList;</code></td></tr>
+        </table>
+
+        <!-- ── CLASS vs OBJECT ── -->
+        <h3>Class vs Object</h3>
+        <table class="nb-table">
+          <tr><th>Term</th><th>What it is</th><th>Real-world analogy</th></tr>
+          <tr><td><strong>Class</strong></td><td>The blueprint/template — defines what fields and methods exist</td><td>Cookie cutter</td></tr>
+          <tr><td><strong>Object</strong></td><td>A specific instance created from the class</td><td>An actual cookie</td></tr>
+          <tr><td><strong>Field (attribute)</strong></td><td>A variable that belongs to the object — stores its data</td><td>Cookie's flavor, size</td></tr>
+          <tr><td><strong>Method</strong></td><td>A function that belongs to the class — does something</td><td>eat(), bake()</td></tr>
+          <tr><td><strong>Constructor</strong></td><td>Special method that creates/initializes the object — no return type, same name as class</td><td>The act of cutting the cookie</td></tr>
+          <tr><td><strong>Instantiation</strong></td><td>Using <code>new</code> to create an object from a class</td><td><code>Dog d = new Dog("Rex");</code></td></tr>
+        </table>
+
+        <!-- ── 4 METHODS ── -->
+        <h3>The 4 Method Types — how to write each one</h3>
+        <table class="nb-table">
+          <tr><th>Type</th><th>Return type</th><th>Parameters</th><th>Template</th></tr>
+          <tr>
+            <td><strong>Constructor</strong></td>
+            <td><em>none</em> (not even void)</td>
+            <td>Whatever you need to initialize</td>
+            <td><code>public Dog(String name){ this.name = name; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>Getter</strong></td>
+            <td>Same type as the field</td>
+            <td>none</td>
+            <td><code>public String getName(){ return name; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>Setter</strong></td>
+            <td><code>void</code></td>
+            <td>One — same type as the field</td>
+            <td><code>public void setName(String name){ this.name = name; }</code></td>
+          </tr>
+          <tr>
+            <td><strong>toString</strong></td>
+            <td><code>String</code></td>
+            <td>none</td>
+            <td><code>public String toString(){ return "Dog: " + name; }</code></td>
+          </tr>
+        </table>
+        <div class="nb-warn"><strong>Shadowing:</strong> When a parameter has the same name as a field, the parameter "shadows" it. Fix with <code>this.name = name;</code> — <code>this.name</code> = the field, <code>name</code> = the parameter.</div>
+
+        <!-- ── VISIBILITY ── -->
+        <h3>access modifiers — who can see what</h3>
+        <table class="nb-table">
+          <tr><th>Modifier</th><th>Who can access it</th><th>When to use</th></tr>
+          <tr><td><code>private</code></td><td>Only this class</td><td>All fields — always make fields private</td></tr>
+          <tr><td><code>public</code></td><td>Everyone</td><td>All methods (constructors, getters, setters, toString)</td></tr>
+        </table>
+
+        <!-- ── STATIC ── -->
+        <h3>static — shared vs per-object</h3>
+        <table class="nb-table">
+          <tr><th></th><th>Instance field (no static)</th><th>Static field</th></tr>
+          <tr><td><strong>Copies</strong></td><td>One per object</td><td>One total — shared by all objects</td></tr>
+          <tr><td><strong>Use when</strong></td><td>Each object has its own value (name, age)</td><td>All objects share the value (counter, tax rate)</td></tr>
+          <tr><td><strong>Call it</strong></td><td><code>obj.field</code></td><td><code>ClassName.field</code></td></tr>
+          <tr><td><strong>Example</strong></td><td><code>private String name;</code></td><td><code>private static int count = 0;</code></td></tr>
+        </table>
+        <div class="nb-tip">Constant = <code>static final</code>. Example: <code>public static final double PI = 3.14159;</code> — never changes, one copy, available everywhere.</div>
+
+        <!-- ── OVERLOADING ── -->
+        <h3>Overloading — same name, different parameters</h3>
+        <table class="nb-table">
+          <tr><th>What it means</th><th>Example</th></tr>
+          <tr><td>Two or more methods with the same name but different parameter lists</td>
+              <td><code>public Dog()</code> and <code>public Dog(String name, int age)</code></td></tr>
+          <tr><td>Java picks the right one based on what you pass</td>
+              <td><code>new Dog()</code> calls no-arg · <code>new Dog("Rex",3)</code> calls the other</td></tr>
+          <tr><td>Constructors are commonly overloaded — no-arg + parameterized</td>
+              <td>Both are valid and useful</td></tr>
+        </table>
+        <div class="nb-warn">Changing only the <strong>return type</strong> is NOT overloading and will cause a compile error. The parameter list must differ.</div>
+
+        <!-- ── ARRAYS ── -->
+        <h3>Arrays — fixed-size list</h3>
+        <table class="nb-table">
+          <tr><th>Concept</th><th>What it means</th><th>Code</th></tr>
+          <tr><td>Declare + create</td><td>Make an array of 5 ints</td><td><code>int[] scores = new int[5];</code></td></tr>
+          <tr><td>Store a value</td><td>Put 90 at index 0</td><td><code>scores[0] = 90;</code></td></tr>
+          <tr><td>Read a value</td><td>Get the value at index 2</td><td><code>int x = scores[2];</code></td></tr>
+          <tr><td>Physical length</td><td>Total slots allocated (fixed)</td><td><code>scores.length</code> → 5</td></tr>
+          <tr><td>Logical length</td><td>How many slots are actually filled — you track this with a counter variable</td><td><code>int count = 0;</code></td></tr>
+          <tr><td>Index</td><td>Position — starts at 0, ends at length-1</td><td>array of 5 → indices 0,1,2,3,4</td></tr>
+          <tr><td>Default values</td><td>int→0, double→0.0, boolean→false, String→null</td><td>after <code>new int[5]</code> all slots = 0</td></tr>
+        </table>
+
+        <h3>Loop patterns for arrays</h3>
+        <table class="nb-table">
+          <tr><th>Task</th><th>Code</th></tr>
+          <tr><td>Write into every slot</td><td><pre style="margin:0">for (int i = 0; i &lt; arr.length; i++) {
+    arr[i] = someValue;
+}</pre></td></tr>
+          <tr><td>Write into next open slot (logical fill)</td><td><pre style="margin:0">arr[count] = newValue;
+count++;</pre></td></tr>
+          <tr><td>Read every slot (for loop)</td><td><pre style="margin:0">for (int i = 0; i &lt; count; i++) {
+    System.out.println(arr[i]);
+}</pre></td></tr>
+          <tr><td>Read every slot (enhanced for)</td><td><pre style="margin:0">for (String s : arr) {
+    System.out.println(s);
+}</pre></td></tr>
+          <tr><td>Sum all values</td><td><pre style="margin:0">double total = 0;  // declare OUTSIDE loop
+for (int i = 0; i &lt; count; i++) {
+    total += arr[i];
+}</pre></td></tr>
+        </table>
+        <div class="nb-tip">Always use <code>count</code> (logical length) in your loop condition — not <code>arr.length</code> — so you don't print empty/null slots.</div>
+
+        <!-- ── ARRAYLIST ── -->
+        <h3>ArrayList — dynamic-size list</h3>
+        <table class="nb-table">
+          <tr><th>Concept</th><th>What it means</th><th>Code</th></tr>
+          <tr><td>Import first</td><td>ArrayList lives in java.util</td><td><code>import java.util.ArrayList;</code></td></tr>
+          <tr><td>Declare + create</td><td>Make an ArrayList of Strings</td><td><code>ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</code></td></tr>
+          <tr><td>Add to end</td><td>Append an element</td><td><code>list.add("hello");</code></td></tr>
+          <tr><td>Get by index</td><td>Read element at position</td><td><code>String s = list.get(0);</code></td></tr>
+          <tr><td>Size</td><td>How many elements are in it</td><td><code>list.size()</code></td></tr>
+          <tr><td>Remove by index</td><td>Delete element, rest shift up</td><td><code>list.remove(1);</code></td></tr>
+          <tr><td>Replace at index</td><td>Overwrite element</td><td><code>list.set(0, "world");</code></td></tr>
+          <tr><td>Loop through</td><td>Enhanced for loop</td><td><code>for (String s : list) { ... }</code></td></tr>
+        </table>
+        <div class="nb-warn">ArrayList cannot hold primitives. Use wrapper types: <code>ArrayList&lt;Integer&gt;</code> not <code>ArrayList&lt;int&gt;</code>.</div>
+
+        <!-- ── WRAPPER CLASSES ── -->
+        <h3>Wrapper Classes — primitive wrapped as an object</h3>
+        <table class="nb-table">
+          <tr><th>Primitive</th><th>Wrapper Class</th><th>String → Primitive</th><th>Primitive → String</th></tr>
+          <tr><td><code>int</code></td><td><code>Integer</code></td><td><code>Integer.parseInt("5")</code></td><td><code>Integer.toString(5)</code></td></tr>
+          <tr><td><code>double</code></td><td><code>Double</code></td><td><code>Double.parseDouble("3.14")</code></td><td><code>Double.toString(3.14)</code></td></tr>
+          <tr><td><code>boolean</code></td><td><code>Boolean</code></td><td><code>Boolean.parseBoolean("true")</code></td><td><code>Boolean.toString(true)</code></td></tr>
+          <tr><td><code>char</code></td><td><code>Character</code></td><td>use <code>charAt(0)</code></td><td><code>Character.toString('A')</code></td></tr>
+        </table>
+        <div class="nb-tip"><strong>Autoboxing:</strong> Java auto-converts <code>int → Integer</code> when needed (e.g., adding to an ArrayList). <strong>Unboxing:</strong> auto-converts back <code>Integer → int</code>.</div>
+
+        <!-- ── STRING METHODS ── -->
+        <h3>String Methods — most used ones</h3>
+        <table class="nb-table">
+          <tr><th>Method</th><th>What it returns</th><th>Example</th></tr>
+          <tr><td><code>.length()</code></td><td>Number of characters</td><td><code>"hello".length()</code> → 5</td></tr>
+          <tr><td><code>.charAt(i)</code></td><td>Character at index i</td><td><code>"hello".charAt(1)</code> → 'e'</td></tr>
+          <tr><td><code>.substring(start)</code></td><td>From start to end</td><td><code>"hello".substring(2)</code> → "llo"</td></tr>
+          <tr><td><code>.substring(start, end)</code></td><td>From start up to (not including) end</td><td><code>"hello".substring(1,3)</code> → "el"</td></tr>
+          <tr><td><code>.indexOf("x")</code></td><td>Index of first occurrence (-1 if not found)</td><td><code>"hello".indexOf("l")</code> → 2</td></tr>
+          <tr><td><code>.contains("x")</code></td><td>true / false</td><td><code>"hello".contains("ell")</code> → true</td></tr>
+          <tr><td><code>.equals("x")</code></td><td>true if same content (case-sensitive)</td><td><code>"Hi".equals("hi")</code> → false</td></tr>
+          <tr><td><code>.equalsIgnoreCase("x")</code></td><td>true if same content ignoring case</td><td><code>"Hi".equalsIgnoreCase("hi")</code> → true</td></tr>
+          <tr><td><code>.toUpperCase()</code></td><td>All caps version</td><td><code>"hi".toUpperCase()</code> → "HI"</td></tr>
+          <tr><td><code>.toLowerCase()</code></td><td>All lowercase version</td><td><code>"HI".toLowerCase()</code> → "hi"</td></tr>
+          <tr><td><code>.trim()</code></td><td>Removes spaces at start and end</td><td><code>"  hi  ".trim()</code> → "hi"</td></tr>
+          <tr><td><code>.replace("a","b")</code></td><td>New string with all "a" replaced by "b"</td><td><code>"cat".replace("a","o")</code> → "cot"</td></tr>
+          <tr><td><code>.split(",")</code></td><td>String array split by delimiter</td><td><code>"a,b,c".split(",")</code> → ["a","b","c"]</td></tr>
+        </table>
+        <div class="nb-warn">Always use <code>.equals()</code> to compare Strings — never <code>==</code>. The <code>==</code> operator compares memory addresses, not content.</div>
+
+        <!-- ── FORMATTING ── -->
+        <h3>Formatting Numbers — 3 ways</h3>
+        <table class="nb-table">
+          <tr><th>Tool</th><th>How to use it</th><th>Output</th></tr>
+          <tr><td><strong>DecimalFormat</strong></td><td><code>new DecimalFormat("#.00").format(3.5)</code></td><td><code>3.50</code></td></tr>
+          <tr><td><strong>printf</strong></td><td><code>System.out.printf("%.2f", 3.5);</code></td><td>prints <code>3.50</code></td></tr>
+          <tr><td><strong>String.format</strong></td><td><code>String s = String.format("%.2f", 3.5);</code></td><td>stores <code>"3.50"</code> in s</td></tr>
+        </table>
+
+        <h3>printf / String.format — format string rules</h3>
+        <table class="nb-table">
+          <tr><th>Specifier</th><th>Means</th><th>Example</th><th>Result</th></tr>
+          <tr><td><code>%d</code></td><td>Integer</td><td><code>printf("%d", 42)</code></td><td><code>42</code></td></tr>
+          <tr><td><code>%f</code></td><td>Decimal (float/double)</td><td><code>printf("%f", 3.5)</code></td><td><code>3.500000</code></td></tr>
+          <tr><td><code>%.2f</code></td><td>Decimal, 2 decimal places</td><td><code>printf("%.2f", 3.5)</code></td><td><code>3.50</code></td></tr>
+          <tr><td><code>%8.2f</code></td><td>Width 8, 2 decimal places, right-aligned</td><td><code>printf("%8.2f", 3.5)</code></td><td><code>&nbsp;&nbsp;&nbsp;&nbsp;3.50</code></td></tr>
+          <tr><td><code>%-8.2f</code></td><td>Width 8, 2 decimal places, left-aligned</td><td><code>printf("%-8.2f", 3.5)</code></td><td><code>3.50&nbsp;&nbsp;&nbsp;&nbsp;</code></td></tr>
+          <tr><td><code>%s</code></td><td>String</td><td><code>printf("%s", "hi")</code></td><td><code>hi</code></td></tr>
+          <tr><td><code>%10s</code></td><td>String right-aligned in width 10</td><td><code>printf("%10s","hi")</code></td><td><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hi</code></td></tr>
+        </table>
+
+        <h3>DecimalFormat pattern characters</h3>
+        <table class="nb-table">
+          <tr><th>Character</th><th>Means</th><th>Example pattern</th><th>Input → Output</th></tr>
+          <tr><td><code>#</code></td><td>Show digit, hide leading/trailing zeros</td><td><code>#.##</code></td><td>3.5 → 3.5</td></tr>
+          <tr><td><code>0</code></td><td>Show digit, force zeros</td><td><code>#.00</code></td><td>3.5 → 3.50</td></tr>
+          <tr><td><code>,</code></td><td>Add comma thousands separator</td><td><code>#,###.00</code></td><td>1234.5 → 1,234.50</td></tr>
+        </table>
+
+        <!-- ── LOOPS ── -->
+        <h3>Loops — when to use which</h3>
+        <table class="nb-table">
+          <tr><th>Loop</th><th>Use when</th><th>Template</th></tr>
+          <tr><td><strong>for</strong></td><td>You know how many times</td><td><pre style="margin:0">for (int i = 0; i &lt; n; i++) {
+    // runs n times
+}</pre></td></tr>
+          <tr><td><strong>while</strong></td><td>You don't know how many times</td><td><pre style="margin:0">while (condition) {
+    // keep going until false
+}</pre></td></tr>
+          <tr><td><strong>enhanced for</strong></td><td>Loop through every element in array/ArrayList</td><td><pre style="margin:0">for (Type var : collection) {
+    // var = each element
+}</pre></td></tr>
+          <tr><td><strong>nested for</strong></td><td>2D patterns, grids, combinations</td><td><pre style="margin:0">for (int i = 0; i &lt; rows; i++) {
+    for (int j = 0; j &lt; cols; j++) {
+        // runs rows × cols times
+    }
+}</pre></td></tr>
+        </table>
+        <div class="nb-tip">Declare any variable you need <strong>after</strong> the loop (like a sum or result) <strong>outside and before</strong> the loop — otherwise it disappears when the loop ends (scope rule).</div>
+
+        <!-- ── RANDOM ── -->
+        <h3>Random Numbers</h3>
+        <table class="nb-table">
+          <tr><th>What you want</th><th>Code</th></tr>
+          <tr><td>Decimal 0.0 – 0.999…</td><td><code>Math.random()</code></td></tr>
+          <tr><td>Int 0 – 9</td><td><code>new Random().nextInt(10)</code></td></tr>
+          <tr><td>Int 1 – 6 (dice)</td><td><code>new Random().nextInt(6) + 1</code></td></tr>
+          <tr><td>Int min – max</td><td><code>new Random().nextInt(max - min + 1) + min</code></td></tr>
+        </table>
+        <div class="nb-tip">Import: <code>import java.util.Random;</code> — then create once: <code>Random rand = new Random();</code> and reuse it.</div>
+
+        <!-- ── AGGREGATION ── -->
+        <h3>Aggregation — one class inside another</h3>
+        <table class="nb-table">
+          <tr><th>Term</th><th>What it means</th></tr>
+          <tr><td><strong>Aggregation</strong></td><td>Class A has a field that is an object of Class B — a "Has-A" relationship</td></tr>
+          <tr><td><strong>Has-A</strong></td><td>Library has Books · Roster has Students · Order has Items</td></tr>
+          <tr><td><strong>Intermediate class</strong></td><td>A class that holds an array or ArrayList of another object class</td></tr>
+          <tr><td><strong>One-way</strong></td><td>Class A can call Class B's methods — but NOT the other way around</td></tr>
+        </table>
+        <div class="nb-tip">Pattern: Intermediate class stores objects in an array + a <code>count</code> variable. An <code>add()</code> method does: <code>array[count] = obj; count++;</code></div>
+
+        <!-- ── JUNIT ── -->
+        <h3>JUnit Testing — quick rules</h3>
+        <table class="nb-table">
+          <tr><th>Assert method</th><th>Passes when…</th><th>Example</th></tr>
+          <tr><td><code>assertEquals(a, b)</code></td><td>a equals b</td><td><code>assertEquals("Rex", d.getName())</code></td></tr>
+          <tr><td><code>assertTrue(expr)</code></td><td>expr is true</td><td><code>assertTrue(d.getAge() > 0)</code></td></tr>
+          <tr><td><code>assertFalse(expr)</code></td><td>expr is false</td><td><code>assertFalse(d.getName().isEmpty())</code></td></tr>
+          <tr><td><code>assertNotNull(obj)</code></td><td>obj is not null</td><td><code>assertNotNull(d)</code></td></tr>
+          <tr><td><code>assertNull(obj)</code></td><td>obj is null</td><td><code>assertNull(emptyField)</code></td></tr>
+        </table>
+        <table class="nb-table">
+          <tr><th>Rule</th><th>Detail</th></tr>
+          <tr><td>Every test needs <code>@Test</code></td><td>Without it, JUnit ignores the method</td></tr>
+          <tr><td>Test constructors first</td><td>Use <code>assertNotNull</code> to check the object was created</td></tr>
+          <tr><td>Test setters</td><td>Set a value, then <code>assertEquals</code> the getter to confirm</td></tr>
+          <tr><td>Don't test toString or print methods</td><td>These are hard to automate — skip them</td></tr>
+        </table>
+
+        <!-- ── PRIMITIVES vs OBJECTS ── -->
+        <h3>Primitives vs Objects</h3>
+        <table class="nb-table">
+          <tr><th></th><th>Primitive (<code>int</code>, <code>double</code>…)</th><th>Object (<code>String</code>, <code>Dog</code>…)</th></tr>
+          <tr><td><strong>Stores</strong></td><td>The value directly</td><td>A reference (memory address) to the object</td></tr>
+          <tr><td><strong>Default</strong></td><td>0, 0.0, false</td><td>null</td></tr>
+          <tr><td><strong>Compare with</strong></td><td><code>==</code> works fine</td><td>Always use <code>.equals()</code></td></tr>
+          <tr><td><strong>In ArrayList</strong></td><td>Not allowed directly</td><td>Allowed — use wrapper (<code>Integer</code>)</td></tr>
+        </table>
+
+        <!-- ── CONCATENATION ── -->
+        <h3>String Concatenation — the + operator</h3>
+        <table class="nb-table">
+          <tr><th>Expression</th><th>Result</th><th>Why</th></tr>
+          <tr><td><code>"Score: " + 5 + 3</code></td><td><code>"Score: 53"</code></td><td>Left to right: String+5 = String, then String+3 = String</td></tr>
+          <tr><td><code>"Score: " + (5 + 3)</code></td><td><code>"Score: 8"</code></td><td>Parentheses force math first, then concatenation</td></tr>
+          <tr><td><code>5 + 3 + " pts"</code></td><td><code>"8 pts"</code></td><td>5+3 is math (both ints), then 8 + " pts" = String</td></tr>
+          <tr><td><code>"" + 5 + 3</code></td><td><code>"53"</code></td><td>Empty string at start triggers concat for everything after</td></tr>
+        </table>
+
+        <!-- ── SCOPE ── -->
+        <h3>Scope — where a variable lives</h3>
+        <table class="nb-table">
+          <tr><th>Scope level</th><th>Declared</th><th>Accessible</th></tr>
+          <tr><td><strong>Class (field)</strong></td><td>Outside all methods, inside the class</td><td>Anywhere in the class via <code>this.name</code></td></tr>
+          <tr><td><strong>Method (local)</strong></td><td>Inside a method</td><td>Only inside that method</td></tr>
+          <tr><td><strong>Loop (block)</strong></td><td>Inside a loop's <code>{ }</code></td><td>Only inside that loop — gone after loop ends</td></tr>
+        </table>
+
+        <!-- ── COMMON ERRORS ── -->
+        <h3>Common mistakes — what goes wrong and why</h3>
+        <table class="nb-table">
+          <tr><th>Mistake</th><th>What happens</th><th>Fix</th></tr>
+          <tr><td><code>name = name;</code> in setter</td><td>Parameter assigns to itself — field never changes</td><td><code>this.name = name;</code></td></tr>
+          <tr><td><code>==</code> to compare Strings</td><td>Compares addresses, not content — wrong answer</td><td><code>.equals()</code></td></tr>
+          <tr><td>Loop uses <code>arr.length</code> with logical fill</td><td>Prints null/0 for empty slots</td><td>Use <code>count</code> instead</td></tr>
+          <tr><td>Constructor has <code>void</code></td><td>Java treats it as a regular method, not a constructor</td><td>Remove <code>void</code></td></tr>
+          <tr><td>Declare sum inside loop</td><td>Resets to 0 every iteration</td><td>Declare sum before the loop</td></tr>
+          <tr><td><code>ArrayList&lt;int&gt;</code></td><td>Compile error — primitives not allowed</td><td><code>ArrayList&lt;Integer&gt;</code></td></tr>
+          <tr><td><code>Integer.parseInt(42)</code></td><td>Compile error — expects String not int</td><td><code>Integer.parseInt("42")</code></td></tr>
+        </table>
+
+      </div><!-- end quick ref -->
 
     </div><!-- nb-content -->
   </div><!-- nb-wrap -->
