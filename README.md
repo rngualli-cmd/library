@@ -5,6 +5,7 @@ Dark, coffee-focused landing page for TerraEnlace with a cursor spotlight reveal
 ## Local Preview
 
 ```bash
+cd app
 npm install
 npm run dev
 ```
@@ -14,7 +15,8 @@ Open the local URL shown by Vite.
 ## Production Build
 
 ```bash
+cd app
 npm run build
 ```
 
-The static site is generated in `dist/`. The Vite base path is relative, so the build can be hosted from a repository subpath, a static folder, or a custom website path.
+The editable Vite project lives in `app/`. The static site is generated in `app/dist/`, and the repository root also contains the latest compiled static output for GitHub Pages/client preview hosting.
