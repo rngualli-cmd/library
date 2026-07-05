@@ -14,5 +14,3 @@ npm run dev
 ```bash
 npm run build
 ```
-
-The generated static website is copied to `docs/` for GitHub Pages hosting.
