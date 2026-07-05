@@ -1,1 +1,10 @@
+node_modules
+dist
+.vite
 .claude/
+.DS_Store
+*.local
+*.tsbuildinfo
+vite*.log
+vite.config.d.ts
+vite.config.js
