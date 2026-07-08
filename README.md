@@ -1,15 +1,22 @@
-# TerraEnlace Website Preview
+# Terra Enlace
 
-Dark, coffee-focused landing page for TerraEnlace with a cursor spotlight reveal, mission and vision content, and a demo contact form.
+Página de aterrizaje para Terra Enlace, empresa ecuatoriana que cultiva y distribuye café y té de origen dentro del Ecuador.
 
-## Local Preview
+## Tecnologías
+
+- React 18 + Vite
+- Tailwind CSS 3
+- Lucide React (iconos)
+- Google Fonts: Instrument Serif + Inter
+
+## Desarrollo
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Production Build
+## Compilación
 
 ```bash
 npm run build
