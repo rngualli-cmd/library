@@ -1,19 +1,376 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Terra Enlace — Café y Té del Ecuador</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <script type="module" crossorigin src="/assets/index-DgloJyuR.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CNdnzAl3.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<!DOCTYPE html>
+<html lang="es-EC">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terra Enlace — Café y Té del Ecuador</title>
+  <meta name="description" content="Conectamos a productores, empresas e instituciones del agro ecuatoriano con conocimiento, comercio y oportunidades.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="https://terraenlace.ec/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://terraenlace.ec/">
+  <meta property="og:image" content="https://terraenlace.ec/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logo de TerraEnlace — Café y Té del Ecuador">
+  <meta property="og:locale" content="es_EC">
+  <meta property="og:site_name" content="Terra Enlace">
+  <meta property="og:title" content="Terra Enlace — Café y Té del Ecuador">
+  <meta property="og:description" content="Del campo al mercado para todo el Ecuador. Conectamos a productores, empresas e instituciones del agro ecuatoriano con conocimiento, comercio y oportunidades.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://terraenlace.ec/og-image.png">
+
+  <link rel="icon" type="image/png" href="/assets/logo/icono-principal.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "TerraEnlace Cía. Ltda.",
+    "alternateName": "Terra Enlace — Café y Té del Ecuador",
+    "description": "Compañía ecuatoriana dedicada a la comercialización de productos agropecuarios, la intermediación comercial y la consultoría técnica.",
+    "url": "https://terraenlace.ec/",
+    "logo": "https://terraenlace.ec/assets/logo/terraenlace-principal.png",
+    "image": "https://terraenlace.ec/og-image.png",
+    "foundingDate": "2024",
+    "telephone": "+593991234567",
+    "email": "info@terraenlace.ec",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Cotogchoa",
+      "addressRegion": "Pichincha",
+      "addressCountry": "EC"
+    },
+    "openingHours": "Mo-Fr 08:30-17:30"
+  }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
+
+    <nav class="nav-pill" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a class="nav-logo" href="#inicio" aria-label="TerraEnlace — Inicio">
+        <img src="assets/logo/icono-amarillo.png" alt="" width="304" height="256">
+      </a>
+      <a href="#servicios">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+    <nav class="site-nav" id="site-nav" aria-label="Menú móvil">
+      <ul class="site-nav__list">
+        <li><a class="site-nav__link" href="#inicio"><span>01</span>Inicio</a></li>
+        <li><a class="site-nav__link" href="#nosotros"><span>02</span>Nosotros</a></li>
+        <li><a class="site-nav__link" href="#servicios"><span>03</span>Servicios</a></li>
+        <li><a class="site-nav__link" href="contacto.html"><span>04</span>Contacto</a></li>
+      </ul>
+      <p class="site-nav__extra">
+        <a href="tel:+593991234567">+593 99 123 4567</a><br>
+        <a href="mailto:info@terraenlace.ec">info@terraenlace.ec</a>
+      </p>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero__art" aria-hidden="true">
+        <img src="assets/art/hero-ecuador.jpg" alt="" width="1536" height="864" decoding="async">
+      </div>
+      <div class="hero__inner">
+        <h1 class="hero__title reveal" id="hero-title">
+          DEL CAMPO <em>al</em> MERCADO <em>para</em> TODO EL ECUADOR
+        </h1>
+        <p class="hero__lead reveal" style="--d:.12s">Conectamos a productores, empresas e instituciones del agro ecuatoriano con conocimiento, comercio y oportunidades.</p>
+        <div class="hero__actions reveal" style="--d:.22s">
+          <a class="btn btn--solid" href="#servicios">
+            Nuestros Servicios
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#nosotros">Conócenos</a>
+        </div>
+      </div>
+      <a class="hero__scroll" href="#nosotros" aria-label="Bajar a la sección Nosotros">
+        Descubre más
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <section class="section about" id="nosotros" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__intro">
+          <div class="reveal">
+            <p class="eyebrow">Nosotros</p>
+            <h2 class="section-title" id="about-title">El enlace <em>entre la tierra</em> y quienes la trabajan</h2>
+          </div>
+          <p class="lead reveal" style="--d:.1s"><strong style="color:var(--navy);font-weight:500">TerraEnlace Cía. Ltda.</strong> es una compañía ecuatoriana dedicada a la comercialización de productos agropecuarios, la intermediación comercial y la consultoría técnica. Trabajamos junto a productores, organizaciones, empresas e instituciones para acercar el campo ecuatoriano a los mercados.</p>
+        </div>
+
+        <div class="mv reveal">
+          <h3 class="mv__title">Misión y Visión</h3>
+          <div class="mv-grid">
+            <article class="mv-card">
+              <div class="mv-card__icon mv-card__icon--green" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3.5-7-6.6-7-10a7 7 0 0 1 14 0c0 3.4-3 6.5-7 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>
+              </div>
+              <h4>Misión <em>TerraEnlace</em></h4>
+              <p>TerraEnlace contribuye al desarrollo sostenible y competitivo del sector agropecuario ecuatoriano mediante la articulación estratégica de productores, organizaciones, empresas e instituciones, ofreciendo servicios de consultoría, gestión empresarial, comercialización, producción, capacitación e investigación que faciliten el acceso a mercados, el fortalecimiento de capacidades y la generación de oportunidades.</p>
+            </article>
+            <article class="mv-card">
+              <div class="mv-card__icon mv-card__icon--sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+              </div>
+              <h4>Visión <em>TerraEnlace</em></h4>
+              <p>Ser el aliado estratégico líder del sector agropecuario ecuatoriano, reconocida por integrar conocimiento, innovación, producción y mercados para generar soluciones sostenibles que fortalezcan la competitividad, promuevan la asociatividad y mejoren la calidad de vida de los actores de las cadenas agroproductivas.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="structure">
+          <div class="reveal">
+            <p class="eyebrow">Estructura corporativa</p>
+            <h3 class="section-title">Un directorio ejecutivo especializado</h3>
+            <p class="lead">La compañía opera bajo una estructura corporativa avanzada, con divisiones dedicadas que garantizan solidez y profesionalismo en cada operación.</p>
+          </div>
+          <ul class="division-list reveal" style="--d:.1s">
+            <li class="division">
+              <h4>Administración y Finanzas</h4>
+              <p>Gestión financiera rigurosa y control administrativo de todas las operaciones.</p>
+            </li>
+            <li class="division">
+              <h4>Operaciones Técnico-Comerciales</h4>
+              <p>Ejecución técnica y comercial de las cadenas de suministro agropecuarias.</p>
+            </li>
+            <li class="division">
+              <h4>Desarrollo de Negocios</h4>
+              <p>Apertura de nuevos mercados y alianzas estratégicas para el sector.</p>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section services" id="servicios" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Servicios</p>
+          <h2 class="section-title" id="services-title">Todo lo que el agro necesita, <em>en un solo lugar</em></h2>
+        </div>
+
+        <ul class="service-list">
+          <li class="service reveal">
+            <div>
+              <div class="service__index" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h13l5 5v7H3z"/><path d="M16 7v5h5"/></svg></span>01</div>
+              <h3>Distribución Mayorista y Cadena de Suministro</h3>
+              <p>Logística de cadena de suministro a gran escala: actuamos como intermediarios comerciales de confianza para llevar materias primas agrícolas y productos frescos de primera calidad a los mercados nacionales e internacionales.</p>
+            </div>
+            <ul class="service-items">
+              <li><h4>Productos agrícolas a granel</h4><p>Distribución mayorista de cultivos esenciales: arroz, cacao, café, granos y semillas.</p></li>
+              <li><h4>Productos frescos y tubérculos</h4><p>Suministro al por mayor de papa, tubérculos y raíces de alta demanda.</p></li>
+              <li><h4>Exportación y logística de frutas</h4><p>Distribución comercial a gran escala de banano, plátano y frutas frescas o en conserva.</p></li>
+              <li><h4>Floricultura</h4><p>Distribución mayorista de flores frescas y plantas vivas.</p></li>
+              <li><h4>Lácteos y productos pecuarios</h4><p>Suministro mayorista de lácteos premium y carnes frescas, incluidas aves de corral.</p></li>
+            </ul>
+          </li>
+
+          <li class="service reveal">
+            <div>
+              <div class="service__index" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h16v10H4z"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>02</div>
+              <h3>Mercados Minoristas Especializados</h3>
+              <p>A través de establecimientos comerciales especializados, ofrecemos acceso directo a alimentos premium, productos frescos y suministros especializados.</p>
+            </div>
+            <ul class="service-items">
+              <li><h4>Tiendas de víveres boutique</h4><p>Frutas frescas, verduras, hortalizas y artículos esenciales del hogar de alta calidad.</p></li>
+              <li><h4>Tiendas especializadas en lácteos</h4><p>Espacios dedicados a lácteos de alta calidad y productos derivados de la leche.</p></li>
+              <li><h4>Nutrición y cuidado de mascotas</h4><p>Alimento premium, accesorios y productos de cuidado para animales domésticos.</p></li>
+              <li><h4>Mercados de carnes y aves</h4><p>Mostradores especializados en carnes frescas y aves de corral de primera calidad.</p></li>
+            </ul>
+          </li>
+
+          <li class="service reveal">
+            <div>
+              <div class="service__index" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M4 17H2V9l4-4h7l3 4h4v8h-2"/></svg></span>03</div>
+              <h3>Insumos y Maquinaria Agroindustrial</h3>
+              <p>Impulsamos a agricultores y empresas agrícolas con la tecnología, las herramientas y los insumos especializados que exige el campo moderno.</p>
+            </div>
+            <ul class="service-items">
+              <li><h4>Maquinaria y equipo agrícola</h4><p>Tractores, arados, cosechadoras, trilladoras, esparcidoras de estiércol, sembradoras y sistemas automatizados para avicultura y apicultura.</p></li>
+              <li><h4>Agroquímicos y fertilizantes</h4><p>Fertilizantes especializados, abonos orgánicos e insumos de alto rendimiento para la nutrición y protección de cultivos.</p></li>
+              <li><h4>Productos veterinarios</h4><p>Farmacéuticos veterinarios y suministros de salud para ganado y animales domésticos.</p></li>
+            </ul>
+          </li>
+
+          <li class="service reveal">
+            <div>
+              <div class="service__index" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M7 19V9l5-4 5 4v10"/><path d="M10 19v-5h4v5"/></svg></span>04</div>
+              <h3>Consultoría Técnica y Asesoría Empresarial</h3>
+              <p>Brindamos consultoría técnica y operativa de alto nivel para que empresas privadas y administraciones públicas optimicen su eficiencia, estructura y planificación estratégica.</p>
+            </div>
+            <ul class="service-items">
+              <li><h4>Consultoría agronómica</h4><p>Optimización del rendimiento de cultivos, salud del suelo y técnicas agrícolas avanzadas.</p></li>
+              <li><h4>Planificación y organización corporativa</h4><p>Estructuración empresarial, diagnósticos de eficiencia, control operativo y sistemas de información administrativa.</p></li>
+              <li><h4>Consultoría técnica especializada</h4><p>Evaluaciones técnicas multidisciplinarias y gestión de proyectos más allá de la ingeniería tradicional.</p></li>
+            </ul>
+          </li>
+
+          <li class="service reveal">
+            <div>
+              <div class="service__index" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v4M8 21h8M9 7h6l1 5H8L9 7Z"/><path d="M8 12v3a4 4 0 0 0 8 0v-3"/></svg></span>05</div>
+              <h3>Servicios Educativos y Gastronomía</h3>
+              <p>Fomentamos el crecimiento de la comunidad y el desarrollo del sector mediante programas de formación a medida y experiencias gastronómicas de primer nivel.</p>
+            </div>
+            <ul class="service-items">
+              <li><h4>Capacitación técnica y talleres</h4><p>Programas educativos y talleres de desarrollo de habilidades para el avance profesional y las operaciones de campo.</p></li>
+              <li><h4>Servicios de alimentación y hospitalidad</h4><p>Experiencias gastronómicas de calidad: restaurantes especializados, cafeterías y picanterías o cevicherías tradicionales.</p></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section contact-cta" id="contacto" aria-labelledby="contact-title">
+      <div class="container reveal">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="section-title" id="contact-title">Hablemos <em>del campo</em></h2>
+        <p class="lead">¿Eres productor, empresa o institución? Escríbenos y encontremos juntos la mejor manera de llevar tu producción más lejos.</p>
+        <a class="btn btn--green" href="contacto.html">Ir a la página de contacto
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__top">
+        <a class="footer__brand" href="#inicio" aria-label="TerraEnlace — Inicio">
+          <img src="assets/logo/icono-amarillo.png" alt="" width="304" height="256">
+          <strong>Terra<span>Enlace</span></strong>
+        </a>
+        <nav class="footer__nav" aria-label="Enlaces del pie de página">
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 TerraEnlace Cía. Ltda. — Ecuador</p>
+        <p class="footer__legal">Operamos en estricto cumplimiento de la normativa societaria ecuatoriana, garantizando el origen legal 100 % verificado de todo nuestro capital, activos y operaciones de la cadena de suministro internacional.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var header = document.querySelector('.site-header');
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.getElementById('site-nav');
+    var navLinks = document.querySelectorAll('.site-nav__link, .nav-pill a:not(.nav-logo)');
+    var desktop = window.matchMedia('(min-width: 880px)');
+    var lightSections = document.querySelectorAll('#nosotros, #servicios');
+
+    function setMenu(open, returnFocus) {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      nav.classList.toggle('is-open', open);
+      document.body.classList.toggle('menu-open', open);
+      if (open) {
+        var first = nav.querySelector('.site-nav__link');
+        if (first) first.focus();
+      } else if (returnFocus) {
+        toggle.focus();
+      }
+    }
+    toggle.addEventListener('click', function () {
+      setMenu(toggle.getAttribute('aria-expanded') !== 'true', true);
+    });
+    nav.querySelectorAll('.site-nav__link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (!desktop.matches) setMenu(false, false);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) setMenu(false, true);
+      if (e.key === 'Tab' && nav.classList.contains('is-open')) {
+        var focusables = [toggle].concat(Array.prototype.slice.call(nav.querySelectorAll('a')));
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    desktop.addEventListener('change', function (e) { if (e.matches) setMenu(false, false); });
+
+    function updateHeader() {
+      var y = window.scrollY + 72;
+      var light = false;
+      lightSections.forEach(function (section) {
+        var rect = section.getBoundingClientRect();
+        var top = rect.top + window.scrollY;
+        if (y >= top && y < top + section.offsetHeight) light = true;
+      });
+      header.classList.toggle('is-light', light || window.scrollY > window.innerHeight * 0.85);
+      header.classList.toggle('is-scrolled', window.scrollY > 10);
+    }
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(function () { updateHeader(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+    updateHeader();
+
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduceMotion.matches) {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      reveals.forEach(function (el) { revealObserver.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add('is-visible'); });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var sections = document.querySelectorAll('main section[id]');
+      var sectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach(function (link) {
+            var href = link.getAttribute('href') || '';
+            if (href === '#' + entry.target.id) link.setAttribute('aria-current', 'true');
+            else if (href.charAt(0) === '#') link.removeAttribute('aria-current');
+          });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach(function (s) { sectionObserver.observe(s); });
+    }
+  })();
+  </script>
+</body>
 </html>
