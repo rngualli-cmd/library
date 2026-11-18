@@ -240,12 +240,11 @@
       place-items: center;
       width: 42px;
       height: 42px;
-      border-radius: 50%;
-      background: var(--navy);
+      border-radius: 0;
+      background: none;
       flex: none;
-      overflow: hidden;
     }
-    .nav-logo img { width: 28px; height: auto; }
+    .nav-logo img { width: 30px; height: auto; display: block; }
 
     @media (min-width: 880px) {
       .nav-toggle { display: none; }
