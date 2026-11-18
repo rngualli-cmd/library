@@ -310,19 +310,18 @@
     .hero__mark {
       display: grid;
       place-items: center;
-      width: clamp(6rem, 4.5rem + 4.5vw, 8.25rem);
-      height: clamp(6rem, 4.5rem + 4.5vw, 8.25rem);
+      width: clamp(6.5rem, 5rem + 4.5vw, 9rem);
+      height: clamp(6.5rem, 5rem + 4.5vw, 9rem);
       margin-bottom: .35rem;
       border-radius: 50%;
-      background: #F7F5EF;
-      border: 1px solid rgba(240, 180, 41, .7);
-      box-shadow:
-        0 0 0 10px rgba(255, 255, 255, .07),
-        0 22px 44px -16px rgba(0, 0, 0, .75);
+      background: transparent;
+      overflow: hidden;
+      box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .7);
     }
     .hero__mark img {
-      width: 58%;
-      height: auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
     .hero__title {
